@@ -49,6 +49,8 @@ export const en = {
   // `ledger.remove` for the same reason: dismissing a message is not
   // removing a budget line, and locales may diverge.
   'notice.dismiss': '×',
+  // The line that turns a table into an invitation. Both pages carry it.
+  'ledger.instruction': 'Type over any figure, add or remove lines, then download the spreadsheet.',
   'ledger.total': 'Total',
   'ledger.empty': 'Add your first line item.',
   'ledger.deviationLegend': 'Changed from the template default',
@@ -98,11 +100,8 @@ export const en = {
   'landing.pageTitle': 'Exhibition budgets you can hand to a funder',
   'landing.pageDescription':
     'Build an exhibition budget line by line in the browser and download it as a spreadsheet. No account, nothing stored.',
-  'landing.documentLabel': 'sample budget',
   'landing.sampleTitle': 'Soft interiors',
-  'landing.sampleVenue': 'Kunstverein Leipzig — March to June 2026',
-  'landing.heroNote':
-    'That is the product. Every figure above is editable, the categories are yours to change, and the result downloads as a spreadsheet.',
+  'landing.sampleVenue': 'Kunstverein Leipzig',
 
   'landing.whatYouGet': 'What you get',
   'landing.get1': 'Line items priced for a mid-size group show, all of them editable',

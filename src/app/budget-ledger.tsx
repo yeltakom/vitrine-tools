@@ -38,8 +38,8 @@ import {
   LABEL_LIGHT,
   ROW,
   WORDMARK,
-} from '../ledger-style'
-import SiteFooter from '../site-footer'
+} from './ledger-style'
+import SiteFooter from './site-footer'
 
 /** A rejected file names its own problem. One key per validator verdict. */
 const FILE_ERROR_KEYS: Record<BudgetFileErrorCode, TranslationKey> = {
@@ -87,9 +87,29 @@ function FigureCell({
   )
 }
 
-export default function BudgetLedger() {
-  const [title, setTitle] = useState('')
-  const [venue, setVenue] = useState('')
+/**
+ * The one ledger. The landing page and /generator render the same live component
+ * — there is no printed copy of it anywhere, because a budget you cannot type
+ * into is a screenshot, and a screenshot is not what this site sells.
+ *
+ * `children` is whatever the page puts between the ledger and the site footer:
+ * nothing on /generator, the sections that explain the product on the landing page.
+ */
+export default function BudgetLedger({
+  heading,
+  initialTitle = '',
+  initialVenue = '',
+  footerAction,
+  children,
+}: {
+  heading?: string
+  initialTitle?: string
+  initialVenue?: string
+  footerAction?: { href: string; label: string }
+  children?: React.ReactNode
+}) {
+  const [title, setTitle] = useState(initialTitle)
+  const [venue, setVenue] = useState(initialVenue)
   const [rows, setRows] = useState<BudgetRow[]>(() => createRowsFromTemplate())
   const [exporting, setExporting] = useState(false)
   const [notice, setNotice] = useState<{ tone: 'error' | 'ok'; text: string } | null>(null)
@@ -101,7 +121,10 @@ export default function BudgetLedger() {
    * The budget lives in this component and nowhere else, so a reload loses it.
    * Warn only once there is something to lose — an untouched template is not work.
    */
-  const unsaved = hasUnsavedWork({ title, venue, rows })
+  const unsaved = hasUnsavedWork(
+    { title, venue, rows },
+    { title: initialTitle, venue: initialVenue },
+  )
   useEffect(() => {
     if (!unsaved) return
     function warn(event: BeforeUnloadEvent) {
@@ -167,7 +190,7 @@ export default function BudgetLedger() {
       <div className="mx-auto max-w-[78ch]">
         {/* The page's own heading. The visible document name is an input, which
             cannot be a heading, so the structural one is read out only. */}
-        <h1 className="sr-only">{t('generator.pageTitle')}</h1>
+        <h1 className="sr-only">{heading ?? t('generator.pageTitle')}</h1>
 
         {/* Masthead, then a rule-spanned action bar: the working file on the left,
             the document you hand over on the right. Same hairline device as a
@@ -184,6 +207,8 @@ export default function BudgetLedger() {
               </Link>
               <span className={LABEL_LIGHT}>{t('generator.documentLabel')}</span>
             </div>
+
+            <p className={`mt-[10px] ${HINT}`}>{t('ledger.instruction')}</p>
 
             <div className="mt-[12px] flex flex-wrap items-center gap-x-[2ch] gap-y-[8px]">
               <button
@@ -403,7 +428,9 @@ export default function BudgetLedger() {
           </p>
         </section>
 
-        <SiteFooter />
+        {children}
+
+        <SiteFooter action={footerAction} />
       </div>
     </main>
   )

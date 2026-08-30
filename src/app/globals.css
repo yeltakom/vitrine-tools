@@ -34,14 +34,16 @@ body {
   color: var(--paper);
 }
 
-/* A ledger cell is text in a document, not a form field.
-   Hover reveals a 1px rule; focus reveals the ring. */
+/* A ledger cell is a field on a form you write on, and it says so while sitting
+   still: every editable cell carries its rule at rest. Hiding the rule until
+   hover made the whole budget read as a printed screenshot — the one thing a
+   live generator must never look like. */
 .cell {
   width: 100%;
   min-width: 0;
   padding: 0;
   border: 0;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid var(--ink);
   border-radius: 0;
   background: transparent;
   color: inherit;
@@ -62,10 +64,6 @@ body {
   opacity: revert;
 }
 
-.cell:hover {
-  border-bottom-color: var(--ink);
-}
-
 /* The quality floor, declared once for everything focusable rather than
    remembered per component. Unlayered, so no utility can quietly remove it. */
 a:focus-visible,
@@ -74,10 +72,6 @@ input:focus-visible,
 [tabindex]:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
-}
-
-.cell:focus-visible {
-  border-bottom-color: transparent;
 }
 
 /* The document's own name outranks its lines. Same rung as the printed title

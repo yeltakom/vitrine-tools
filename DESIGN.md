@@ -32,11 +32,18 @@ It is the same device for a category and its subtotal, for the masthead and its 
 and for a section head and its number.
 
 ## Signature
-**The landing page is a ledger, not a landing page.** It opens on a working budget table —
-no headline, no hero copy. Every section below it keeps the ledger's grammar: a label on the
-left, a hairline, a figure on the right. What you get is three ledger lines (`13`, `.xlsx`,
-`0`). The price is one more line — `29,00`, set in the same red the total is set in. The
-product's output *is* the argument, so the page is built out of it.
+**The landing page is the generator.** Not a picture of it, not a read-only sample: the same
+live component, seeded with a real show, that a visitor types into and downloads from without
+going anywhere else. There is no headline and no hero copy — one instruction line ("Type over
+any figure…") and then the working document.
+
+Every section below keeps the ledger's grammar: a label on the left, a hairline, a figure on
+the right. What you get is three ledger lines (`13`, `.xlsx`, `0`). The price is one more
+line — `29,00`, set in the same red the total is set in.
+
+Because the hero is live, every editable cell carries its 1px rule **at rest** rather than on
+hover. A budget whose fields only appear when the pointer finds them reads as a screenshot,
+and a screenshot is the one thing this page must not be.
 
 ## Critique — would a generic AI produce this?
 A generic pass produces: headline hero + subhead + CTA, three feature cards with icons, a

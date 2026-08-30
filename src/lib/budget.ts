@@ -74,12 +74,12 @@ export function isDeviating(row: BudgetRow): boolean {
  * ledger that is no longer the seeded template. Drives the leave warning — the
  * budget lives in React state only, so a refresh is a shredder.
  */
-export function hasUnsavedWork(doc: {
-  title: string
-  venue: string
-  rows: BudgetRow[]
-}): boolean {
-  if (doc.title.trim() !== '' || doc.venue.trim() !== '') return true
+export function hasUnsavedWork(
+  doc: { title: string; venue: string; rows: BudgetRow[] },
+  seed: { title: string; venue: string } = { title: '', venue: '' },
+): boolean {
+  if (doc.title.trim() !== seed.title.trim()) return true
+  if (doc.venue.trim() !== seed.venue.trim()) return true
   if (doc.rows.length !== exhibitionBudgetTemplate.length) return true
   return doc.rows.some(isDeviating)
 }
