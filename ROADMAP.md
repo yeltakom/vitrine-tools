@@ -5,11 +5,15 @@ Work top to bottom. Tick boxes as you go. One task = one commit.
 ## Milestone 1 — Paid loop live (target: first paying user)
 
 ### Generator hardening
+- [x] Brief-driven generation: a short form describes the show, `src/lib/generate-budget.ts`
+      costs it across six categories. Rates move by venue factor and city factor; quantities
+      are derived from works, loans, crew and run length. The ledger only corrects the result.
 - [x] Move generator into `/generator` route as a proper page (not a component demo)
 - [x] Persist current budget in URL/localStorage-free state (React state + optional JSON import/export so users don't lose work)
 - [x] Add "Import JSON / Export JSON" so users can save and reload budgets without accounts
 - [ ] Add PDF export alongside .xlsx (client-side, same data model)
-- [ ] Add 3 more template categories from `src/data/templates/`: Production, Communication/Press, Public Programme
+- [x] Add 3 more template categories from `src/data/templates/`: Production, Communication/Press, Public Programme
+      (all six categories are now produced by the generator, not stored as a static template)
 - [ ] Add a currency/format switch (EUR default; GBP, USD, TRY formatting only, no conversion)
 
 ### Free vs paid gate (4 tiers)

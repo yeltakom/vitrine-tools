@@ -4,8 +4,18 @@ Read this fully before touching code. Then read ROADMAP.md and pick the first un
 
 ## What this is
 Web app that generates professional exhibition-planning documents (Excel/PDF) for freelance curators
-and small cultural institutions. First template: exhibition budget (Sergi/Kuratorial).
+and small cultural institutions. First document: exhibition budget (Sergi/Kuratorial).
 Anonymous brand — no personal names anywhere in code, copy, or metadata.
+
+**The product mechanic — do not break this.** The user describes their exhibition in a short brief
+(venue type, city, dates, artists, works, how many are loans, what is in the show, crew, technical
+needs) and the app *generates the costed budget for them*. Every quantity is derived from the brief
+and every rate is a card rate moved by a venue factor and a city factor — see
+`src/lib/generate-budget.ts` and `src/data/templates/exhibition-budget.ts`.
+
+A screen that makes the user type line items is a failure of the product, not a feature of it: that
+is Excel, and they already have Excel. The editable ledger exists only to *correct* a generated
+budget, never to build one from nothing.
 
 ## Stack (do not change without asking)
 - Next.js 15 (App Router), TypeScript, Tailwind

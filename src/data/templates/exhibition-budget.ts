@@ -1,15 +1,85 @@
 import type { TranslationKey } from '@/i18n'
 
 /**
- * Default line items for an exhibition budget.
- * All figures are EUR, netto. Only the categories a real exhibition budget opens with —
- * production, communication/press and public programme are separate templates.
+ * The six categories a funded exhibition budget is read in, and the rate card
+ * the generator prices them from.
+ *
+ * Rates are EUR netto at the baseline the card is calibrated to: a non-collecting
+ * Kunsthalle in Berlin. Everything else is that number moved by a venue factor
+ * and a city factor — see `src/lib/generate-budget.ts`. Nothing here is a line
+ * item; lines are produced from a brief, because a budget nobody can generate is
+ * just a spreadsheet with our name on it.
  */
 
-export type BudgetCategoryId = 'fees' | 'transportInsurance' | 'installation'
+export type BudgetCategoryId =
+  | 'fees'
+  | 'transportInsurance'
+  | 'installation'
+  | 'production'
+  | 'communication'
+  | 'publicProgramme'
 
-export interface BudgetTemplateItem {
-  /** Stable id — survives reordering and is the row key. */
+export const budgetCategoryOrder: readonly BudgetCategoryId[] = [
+  'fees',
+  'transportInsurance',
+  'installation',
+  'production',
+  'communication',
+  'publicProgramme',
+]
+
+export const budgetCategoryLabelKeys: Record<BudgetCategoryId, TranslationKey> = {
+  fees: 'category.fees',
+  transportInsurance: 'category.transportInsurance',
+  installation: 'category.installation',
+  production: 'category.production',
+  communication: 'category.communication',
+  publicProgramme: 'category.publicProgramme',
+}
+
+/** EUR netto, Berlin / Kunsthalle baseline. Quantities come from the brief. */
+export const rateCard = {
+  curatorialFee: 4500,
+  /** Per artist. Sits inside the BBK / W.A.G.E. range for a mid-size group show. */
+  artistFee: 900,
+  exhibitionDesignFee: 2200,
+  technicalPlanningFee: 1200,
+  registrarFee: 1800,
+
+  artHandlingDay: 480,
+  freightShipment: 1650,
+  /** Per loaned work, nail-to-nail, for the length of a normal run. */
+  insurancePerWork: 145,
+  courier: 620,
+
+  /** Per person per day. */
+  crewDay: 320,
+  wallConstruction: 3200,
+  lightingDay: 420,
+  /** Per device, per month of the run. */
+  av: {
+    projector: 650,
+    screen: 480,
+    audio: 420,
+    lighting: 380,
+    interactive: 900,
+  },
+
+  /** Per work made for the show rather than borrowed. */
+  productionPerWork: 1200,
+  performanceFee: 1400,
+
+  graphicDesign: 1800,
+  printRun: 950,
+  photoDocumentation: 780,
+  pressAndMailing: 1400,
+
+  openingReception: 1600,
+  artistTalk: 350,
+  guidedTour: 120,
+} as const
+
+export interface BudgetLineSpec {
   id: string
   categoryId: BudgetCategoryId
   labelKey: TranslationKey
@@ -18,122 +88,3 @@ export interface BudgetTemplateItem {
   /** EUR, netto. */
   unitPrice: number
 }
-
-export const budgetCategoryOrder: readonly BudgetCategoryId[] = [
-  'fees',
-  'transportInsurance',
-  'installation',
-]
-
-export const budgetCategoryLabelKeys: Record<BudgetCategoryId, TranslationKey> = {
-  fees: 'category.fees',
-  transportInsurance: 'category.transportInsurance',
-  installation: 'category.installation',
-}
-
-export const exhibitionBudgetTemplate: readonly BudgetTemplateItem[] = [
-  {
-    id: 'fees-curatorial',
-    categoryId: 'fees',
-    labelKey: 'item.curatorialFee',
-    unitKey: 'unit.flat',
-    quantity: 1,
-    unitPrice: 4500,
-  },
-  {
-    id: 'fees-artist',
-    categoryId: 'fees',
-    labelKey: 'item.artistFee',
-    unitKey: 'unit.artist',
-    quantity: 6,
-    unitPrice: 800,
-  },
-  {
-    id: 'fees-exhibition-design',
-    categoryId: 'fees',
-    labelKey: 'item.exhibitionDesignFee',
-    unitKey: 'unit.flat',
-    quantity: 1,
-    unitPrice: 2200,
-  },
-  {
-    id: 'fees-technical-planning',
-    categoryId: 'fees',
-    labelKey: 'item.technicalPlanningFee',
-    unitKey: 'unit.flat',
-    quantity: 1,
-    unitPrice: 1200,
-  },
-  {
-    id: 'transport-art-handling',
-    categoryId: 'transportInsurance',
-    labelKey: 'item.artHandling',
-    unitKey: 'unit.day',
-    quantity: 4,
-    unitPrice: 480,
-  },
-  {
-    id: 'transport-freight',
-    categoryId: 'transportInsurance',
-    labelKey: 'item.freight',
-    unitKey: 'unit.shipment',
-    quantity: 2,
-    unitPrice: 1650,
-  },
-  {
-    id: 'transport-insurance',
-    categoryId: 'transportInsurance',
-    labelKey: 'item.insurance',
-    unitKey: 'unit.policy',
-    quantity: 1,
-    unitPrice: 1450,
-  },
-  {
-    id: 'transport-courier',
-    categoryId: 'transportInsurance',
-    labelKey: 'item.courier',
-    unitKey: 'unit.courier',
-    quantity: 2,
-    unitPrice: 620,
-  },
-  {
-    id: 'installation-aufbau',
-    categoryId: 'installation',
-    labelKey: 'item.installationCrew',
-    unitKey: 'unit.day',
-    quantity: 5,
-    unitPrice: 520,
-  },
-  {
-    id: 'installation-abbau',
-    categoryId: 'installation',
-    labelKey: 'item.deinstallationCrew',
-    unitKey: 'unit.day',
-    quantity: 2,
-    unitPrice: 520,
-  },
-  {
-    id: 'installation-walls',
-    categoryId: 'installation',
-    labelKey: 'item.wallConstruction',
-    unitKey: 'unit.flat',
-    quantity: 1,
-    unitPrice: 3200,
-  },
-  {
-    id: 'installation-av',
-    categoryId: 'installation',
-    labelKey: 'item.avRental',
-    unitKey: 'unit.month',
-    quantity: 1,
-    unitPrice: 1850,
-  },
-  {
-    id: 'installation-lighting',
-    categoryId: 'installation',
-    labelKey: 'item.lighting',
-    unitKey: 'unit.day',
-    quantity: 2,
-    unitPrice: 420,
-  },
-]

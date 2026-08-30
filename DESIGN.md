@@ -45,12 +45,13 @@ document type and whether it is built yet.
 - A **title wall** in ink opens it: the headline set as a wall, uppercase, leading under 1.
 - Beside it hangs the **wall label** — the five-line typed card an institution puts next to
   every object: maker, work and year, medium, dimensions, credit line. Filled in with what is
-  true here, including the dimensions: `78 characters × unlimited lines`, which is the actual
-  measure of the document the tool produces.
+  true here, including the dimensions: `Fourteen questions in, six categories out`, which is
+  the actual shape of the thing.
 - Each room after it opens with its own label, and where a room needs an introduction it gets
   **wall text**, set larger than the catalogue prose beneath it.
-- The generator is the **object on display**: framed, labelled `THE GENERATOR / LIVE`, and
-  live — you type into the thing itself, and what you type is in the file you download.
+- The generator is the **object on display**: framed, labelled `THE GENERATOR / LIVE`. What is
+  shown is a budget the real engine generated from a real brief, still editable — never a
+  hand-typed sample, because the claim of the page is that nothing here is typed by hand.
 - Pricing is **four works on one wall**, divided by hairlines, with Full filled in red because
   it is the only tier carrying PDF and every document type still to come.
 

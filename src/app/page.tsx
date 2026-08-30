@@ -1,5 +1,6 @@
-import { exhibitionBudgetTemplate } from '@/data/templates/exhibition-budget'
+import { sampleBrief } from '@/data/templates/sample-brief'
 import { t } from '@/i18n'
+import { generateBudget } from '@/lib/generate-budget'
 import BudgetLedger from './budget-ledger'
 import { LedgerRow, Question, Room, RoomLabel, Step, WallLabel } from './landing-parts'
 import { BUTTON, DOC, HINT, LABEL_LIGHT, WORDMARK } from './ledger-style'
@@ -20,6 +21,10 @@ import SiteFooter from './site-footer'
  * the one pricing tier the wall is hung around.
  */
 export default function Home() {
+  // The homepage prices a real brief with the real engine — nothing on it is
+  // typed by hand, which is the whole claim the page is making.
+  const sampleRows = generateBudget(sampleBrief)
+
   return (
     <main>
       {/* Title wall. */}
@@ -36,8 +41,8 @@ export default function Home() {
           <div>
             <p className="lede">{t('hero.lede')}</p>
             <div className="mt-[28px] flex flex-wrap items-center gap-x-[3ch] gap-y-[14px]">
-              <a className={`ghost ${BUTTON} hover:bg-paper hover:text-ink`} href="#try">
-                {t('action.buildBudget')}
+              <a className={`ghost ${BUTTON} hover:bg-paper hover:text-ink`} href="/generator">
+                {t('action.describeShow')}
               </a>
               <a className="link" href="#pricing">
                 {t('action.seePricing')}
@@ -76,8 +81,9 @@ export default function Home() {
           <div className={DOC}>
             <BudgetLedger
               masthead={false}
-              initialTitle={t('landing.sampleTitle')}
-              initialVenue={t('landing.sampleVenue')}
+              initialTitle={sampleBrief.title}
+              initialVenue={`${sampleBrief.venue}, ${sampleBrief.city}`}
+              initialRows={sampleRows}
             />
           </div>
         </div>
@@ -106,11 +112,7 @@ export default function Home() {
 
         <div className="mt-[48px]">
           <RoomLabel label={t('landing.whatYouGet')} />
-          <LedgerRow
-            body={t('landing.get1')}
-            figure={String(exhibitionBudgetTemplate.length)}
-            strong
-          />
+          <LedgerRow body={t('landing.get1')} figure={String(sampleRows.length)} strong />
           <LedgerRow body={t('landing.get2')} figure={t('landing.get2Figure')} strong />
           <LedgerRow body={t('landing.get3')} figure={t('landing.get3Figure')} strong />
         </div>

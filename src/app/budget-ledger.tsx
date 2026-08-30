@@ -9,7 +9,6 @@ import {
 import { t, type TranslationKey } from '@/i18n'
 import {
   createEmptyRow,
-  createRowsFromTemplate,
   formatAmount,
   formatQuantity,
   hasUnsavedWork,
@@ -98,15 +97,23 @@ export default function BudgetLedger({
   masthead = true,
   initialTitle = '',
   initialVenue = '',
+  initialRows,
+  targetBudget = null,
+  onEditBrief,
 }: {
   /** The wordmark line. Off when a page already carries one above the ledger. */
   masthead?: boolean
   initialTitle?: string
   initialVenue?: string
+  /** The generated budget. The ledger refines it; it never invents it. */
+  initialRows: BudgetRow[]
+  /** What the curator said they had. Shown as a variance against the result. */
+  targetBudget?: number | null
+  onEditBrief?: () => void
 }) {
   const [title, setTitle] = useState(initialTitle)
   const [venue, setVenue] = useState(initialVenue)
-  const [rows, setRows] = useState<BudgetRow[]>(() => createRowsFromTemplate())
+  const [rows, setRows] = useState<BudgetRow[]>(initialRows)
   const [exporting, setExporting] = useState(false)
   const [notice, setNotice] = useState<{ tone: 'error' | 'ok'; text: string } | null>(null)
   const fileInput = useRef<HTMLInputElement>(null)
@@ -119,7 +126,7 @@ export default function BudgetLedger({
    */
   const unsaved = hasUnsavedWork(
     { title, venue, rows },
-    { title: initialTitle, venue: initialVenue },
+    { title: initialTitle, venue: initialVenue, rowCount: initialRows.length },
   )
   useEffect(() => {
     if (!unsaved) return
@@ -205,6 +212,15 @@ export default function BudgetLedger({
             <p className={masthead ? `mt-[10px] ${HINT}` : HINT}>{t('ledger.instruction')}</p>
 
             <div className="mt-[12px] flex flex-wrap items-center gap-x-[2ch] gap-y-[8px]">
+              {onEditBrief ? (
+                <button
+                  type="button"
+                  className={`ghost ${HINT} hover:font-bold`}
+                  onClick={onEditBrief}
+                >
+                  {t('action.editBrief')}
+                </button>
+              ) : null}
               <button
                 type="button"
                 className={`ghost ${HINT} hover:font-bold`}
@@ -416,6 +432,24 @@ export default function BudgetLedger({
               </span>
             </span>
           </div>
+          {targetBudget && targetBudget > 0 ? (
+            <div className="mb-[16px] border-b border-ink pb-[16px]">
+              <div className="flex items-baseline justify-between gap-[2ch]">
+                <span className={HINT}>{t('ledger.targetLabel')}</span>
+                <span className="figure">{formatAmount(targetBudget)}</span>
+              </div>
+              <div className="mt-[6px] flex items-baseline justify-between gap-[2ch]">
+                <span className={`${HINT} font-bold`}>
+                  {total > targetBudget ? t('ledger.overBy') : t('ledger.underBy')}
+                </span>
+                <span
+                  className={`figure ${total > targetBudget ? 'text-mark' : ''}`}
+                >
+                  {formatAmount(Math.abs(total - targetBudget))}
+                </span>
+              </div>
+            </div>
+          ) : null}
           <p className={`flex items-center gap-[1ch] ${HINT}`}>
             <span className="block h-[5px] w-[5px] shrink-0 bg-mark" aria-hidden="true" />
             {t('ledger.deviationLegend')}

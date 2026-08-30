@@ -1,8 +1,4 @@
-import {
-  budgetCategoryOrder,
-  exhibitionBudgetTemplate,
-  type BudgetCategoryId,
-} from '@/data/templates/exhibition-budget'
+import { budgetCategoryOrder, type BudgetCategoryId } from '@/data/templates/exhibition-budget'
 import { t } from '@/i18n'
 
 /** A line as it exists on screen. What is on screen is what lands in the .xlsx. */
@@ -15,32 +11,14 @@ export interface BudgetRow {
   /** EUR, netto. */
   unitPrice: number
   /**
-   * The template default this row was seeded from, or null for a row the user added.
-   * Used to decide whether the row still shows boilerplate or has been reviewed.
+   * The generated values this row arrived with, or null for a row the curator
+   * added. Used to decide whether the row still reads as generated or has been
+   * reviewed and changed.
    */
   seed: { description: string; quantity: number; unitPrice: number } | null
 }
 
 let addedRowCount = 0
-
-export function createRowsFromTemplate(): BudgetRow[] {
-  return exhibitionBudgetTemplate.map((item) => {
-    const description = t(item.labelKey)
-    return {
-      id: item.id,
-      categoryId: item.categoryId,
-      description,
-      unit: t(item.unitKey),
-      quantity: item.quantity,
-      unitPrice: item.unitPrice,
-      seed: {
-        description,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-      },
-    }
-  })
-}
 
 export function createEmptyRow(categoryId: BudgetCategoryId): BudgetRow {
   addedRowCount += 1
@@ -76,11 +54,11 @@ export function isDeviating(row: BudgetRow): boolean {
  */
 export function hasUnsavedWork(
   doc: { title: string; venue: string; rows: BudgetRow[] },
-  seed: { title: string; venue: string } = { title: '', venue: '' },
+  seed: { title: string; venue: string; rowCount: number },
 ): boolean {
   if (doc.title.trim() !== seed.title.trim()) return true
   if (doc.venue.trim() !== seed.venue.trim()) return true
-  if (doc.rows.length !== exhibitionBudgetTemplate.length) return true
+  if (doc.rows.length !== seed.rowCount) return true
   return doc.rows.some(isDeviating)
 }
 

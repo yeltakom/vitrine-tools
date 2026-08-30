@@ -6,7 +6,7 @@ export const en = {
   'generator.documentLabel': 'exhibition budget',
   'generator.pageTitle': 'Exhibition budget generator',
   'generator.pageDescription':
-    'Build an exhibition budget line by line and download it as a spreadsheet. EUR, netto.',
+    'Describe your exhibition and get a costed budget back across six categories. Download it as a spreadsheet. EUR, netto.',
 
   'field.titlePlaceholder': 'Untitled exhibition',
   'field.venueLabel': 'Venue',
@@ -17,11 +17,15 @@ export const en = {
   'category.fees': 'Fees',
   'category.transportInsurance': 'Transport & insurance',
   'category.installation': 'Installation & technical',
+  'category.production': 'Production',
+  'category.communication': 'Communication & press',
+  'category.publicProgramme': 'Public programme',
 
   'item.curatorialFee': 'Curatorial fee',
   'item.artistFee': 'Artist fee',
   'item.exhibitionDesignFee': 'Exhibition design fee',
   'item.technicalPlanningFee': 'Technical planning fee',
+  'item.registrarFee': 'Registrar and loan administration',
   'item.artHandling': 'Art handling and packing',
   'item.freight': 'Freight (round trip)',
   'item.insurance': 'Nail-to-nail insurance',
@@ -29,16 +33,102 @@ export const en = {
   'item.installationCrew': 'Installation crew (Aufbau)',
   'item.deinstallationCrew': 'De-installation crew (Abbau)',
   'item.wallConstruction': 'Wall construction and paint',
-  'item.avRental': 'AV equipment rental',
   'item.lighting': 'Lighting adjustment',
+  'item.avProjector': 'Projector rental',
+  'item.avScreen': 'Screen and monitor rental',
+  'item.avAudio': 'Audio system rental',
+  'item.avLighting': 'Special lighting rental',
+  'item.avInteractive': 'Interactive station rental',
+  'item.productionSupport': 'Production support for new work',
+  'item.performanceFee': 'Performance fee and rehearsal',
+  'item.graphicDesign': 'Graphic design and identity',
+  'item.printRun': 'Print: invitations, wall texts, vinyl',
+  'item.photoDocumentation': 'Photographic documentation',
+  'item.pressAndMailing': 'Press office and mailing',
+  'item.openingReception': 'Opening reception',
+  'item.artistTalk': 'Artist talk fee',
+  'item.guidedTour': 'Guided tour',
 
   'unit.flat': 'flat',
   'unit.day': 'day',
+  'unit.crewDay': 'crew-day',
   'unit.month': 'month',
   'unit.artist': 'artist',
+  'unit.work': 'work',
   'unit.shipment': 'shipment',
-  'unit.policy': 'policy',
   'unit.courier': 'courier',
+  'unit.performance': 'performance',
+  'unit.talk': 'talk',
+  'unit.tour': 'tour',
+
+  // ——— The brief form. Every field either scales the result or switches a
+  // category on, and the hint under it says which.
+  'brief.intro':
+    'Describe the show once. The generator prices it at mid-market rates for the city and venue type you name, and every line it produces stays editable.',
+  'brief.sectionShow': 'The show',
+  'brief.title': 'Exhibition title',
+  'brief.venue': 'Venue',
+  'brief.city': 'City',
+  'brief.cityPlaceholder': 'Berlin',
+  'brief.cityHint': 'Moves every rate. Berlin is the baseline; unlisted cities stay at it.',
+  'brief.venueType': 'Venue type',
+  'brief.venueTypeHint': 'A project space is not a museum. This scales fees and crew.',
+  'brief.opening': 'Opening',
+  'brief.closing': 'Closing',
+  'brief.datesHint': 'Sets AV rental months, talks and tours. Blank means a 90-day run.',
+
+  'brief.sectionWorks': 'Artists and works',
+  'brief.artists': 'Artists',
+  'brief.artistsHint': 'One artist fee each.',
+  'brief.works': 'Works',
+  'brief.worksHint': 'Drives handling days, install days and wall build.',
+  'brief.loanedWorks': 'Of those, on loan',
+  'brief.loanedWorksHint': 'Loans add insurance, courier and registrar. The rest are produced.',
+  'brief.artworkTypes': 'What is in the show',
+  'brief.artworkTypesHint': 'Performance adds a fee line. Installation adds technical planning.',
+
+  'brief.sectionInstall': 'Install and money',
+  'brief.crew': 'Install crew (people)',
+  'brief.crewHint': 'Multiplied by the install days the work count implies.',
+  'brief.targetBudget': 'Budget you have (optional)',
+  'brief.targetBudgetPlaceholder': '45000',
+  'brief.targetBudgetHint': 'Not used to scale anything — the result is compared against it.',
+  'brief.avNeeds': 'Technical equipment',
+  'brief.avNeedsHint': 'Rented per month of the run.',
+  'brief.generateHint': 'Nothing is sent anywhere. The budget is built in this tab.',
+
+  'action.generateBudget': 'Generate the budget',
+  'action.editBrief': 'Change the brief',
+
+  'ledger.targetLabel': 'Budget you said you have',
+  'ledger.overBy': 'Over by',
+  'ledger.underBy': 'Left over',
+
+  // ——— The brief. What a curator tells us before anything is priced.
+  'venueType.museum': 'Museum (collecting)',
+  'venueType.kunsthalle': 'Kunsthalle / non-collecting',
+  'venueType.gallery': 'Commercial gallery',
+  'venueType.biennale': 'Biennale / festival',
+  'venueType.projectSpace': 'Project space / artist-run',
+  'venueType.publicSpace': 'Public space / outdoor',
+  'venueType.university': 'University / academic',
+
+  'artwork.painting': 'Painting',
+  'artwork.sculpture': 'Sculpture',
+  'artwork.photography': 'Photography',
+  'artwork.video': 'Video / film',
+  'artwork.installation': 'Installation',
+  'artwork.print': 'Print / drawing',
+  'artwork.digital': 'Digital / new media',
+  'artwork.performance': 'Performance',
+  'artwork.sound': 'Sound',
+  'artwork.textile': 'Textile',
+
+  'av.projector': 'Projectors',
+  'av.screen': 'Screens and monitors',
+  'av.audio': 'Audio',
+  'av.lighting': 'Special lighting',
+  'av.interactive': 'Interactive stations',
 
   // The multiplication sign between quantity and unit price.
   'ledger.times': '×',
@@ -50,10 +140,11 @@ export const en = {
   // removing a budget line, and locales may diverge.
   'notice.dismiss': '×',
   // The line that turns a table into an invitation. Both pages carry it.
-  'ledger.instruction': 'Type over any figure, add or remove lines, then download the spreadsheet.',
+  'ledger.instruction':
+    'Generated from your brief. Type over anything you disagree with, then download the spreadsheet.',
   'ledger.total': 'Total',
-  'ledger.empty': 'Add your first line item.',
-  'ledger.deviationLegend': 'Changed from the template default',
+  'ledger.empty': 'The brief produced nothing here. Add a line, or change the brief.',
+  'ledger.deviationLegend': 'Changed from what the generator produced',
   'ledger.summaryOne': '1 line · EUR netto',
   'ledger.summaryMany': '{count} lines · EUR netto',
 
@@ -70,7 +161,7 @@ export const en = {
   'a11y.exhibitionTitle': 'Exhibition title',
   'a11y.venue': 'Venue',
   'a11y.newLine': 'New line item',
-  'a11y.deviation': '{item} was changed from the template default',
+  'a11y.deviation': '{item} was changed from the generated figure',
 
   // The .json working file: what leaves the page and comes back.
   'json.fileName': 'exhibition-budget',
@@ -106,16 +197,16 @@ export const en = {
   'landing.sampleTitle': 'Soft interiors',
   'landing.sampleVenue': 'Kunstverein Leipzig',
 
-  'hero.headline': 'Exhibition budgets without the inherited spreadsheet',
+  'hero.headline': 'Describe the show. Get the budget.',
   'hero.lede':
-    'Start from a template that is already priced, change what differs, and download an .xlsx a funder can open. Built for freelance curators and small institutions that plan shows without a finance department.',
+    'Six artists, twenty-four works, eleven of them on loan, three months at a Kunstverein in Leipzig. That is the whole input. The generator prices every line — fees, freight, insurance, Aufbau, production, press, public programme — at mid-market rates for that city and that kind of venue, and hands you the .xlsx.',
 
   // The wall label: the typed card beside a work. Artist, title and year,
   // medium, dimensions, credit line — filled in with what is actually true.
   'label.maker': 'VITRINE.TOOLS',
   'label.work': 'Exhibition budget generator, 2026',
   'label.medium': 'Web application, client-side .xlsx',
-  'label.dimensions': '78 characters × unlimited lines',
+  'label.dimensions': 'Fourteen questions in, six categories out',
   'label.credit': 'Free edition. EUR, netto.',
 
   'section.why': 'Why this exists',
@@ -123,22 +214,24 @@ export const en = {
     'Every exhibition budget starts as a file someone else built. It arrives from a colleague or a previous show, gets passed between institutions, and by the time it reaches you nobody remembers which cells are formulas and which were typed over.',
   'why.body2':
     'It breaks quietly: a subtotal that stopped covering the last three rows, an artist fee renamed but never re-linked, Aufbau and Abbau counted once between them. Meanwhile the categories barely change from show to show — fees, transport and insurance, installation, production, communication, public programme — and the same numbers have to survive twice, once in the application and again in the Verwendungsnachweis a year later.',
-  'why.body3': 'What changes every time is the file. So the file is the thing worth replacing.',
+  'why.body3':
+    'So the tool does not hand you a better empty file. You describe the show once and it costs the whole thing out, because the arithmetic was never the interesting part of your job.',
 
   'section.how': 'How it works',
-  'how.startLabel': 'Start',
+  'how.startLabel': 'Describe',
   'how.startBody':
-    'Curatorial and artist fees, nail-to-nail insurance, freight, courier per diems, Aufbau and Abbau crews — the categories arrive already priced at mid-size group-show rates, so the first thing you do is edit a budget rather than invent one.',
-  'how.changeLabel': 'Change',
+    'Fourteen questions: venue type and city, dates, how many artists and works, how many of those are loans, what is in the show, crew size, technical needs. No line items — that is what you came here not to write.',
+  'how.changeLabel': 'Generate',
   'how.changeBody':
-    'Type over any figure. Add lines, remove what you do not need, rename anything. Changed lines carry a mark, so you can see what is yours and what is still boilerplate.',
+    'Six categories come back costed. Loans switch on insurance, courier and registrar; performance adds a fee line; the run length sets AV rental months and how many talks and tours you can hold. Anything you disagree with, type over — changed lines carry a mark.',
   'how.downloadLabel': 'Download',
   'how.downloadBody':
     'Take the .xlsx. Subtotals per category and a total are calculated inside the file, so it goes straight into an application and still makes sense to a Verwaltung reading it a year later.',
 
   'section.try': 'The generator',
   'try.status': 'live',
-  'try.note': 'Not a screenshot. Type into it — whatever you change here is in the file you download.',
+  'try.note':
+    'Generated from the brief above by the same engine the site runs — not typed by hand and not a screenshot. Correct any line you disagree with; it is your budget, not ours.',
 
   'section.documents': 'Documents',
   'documents.note': 'One document type works today. The rest are being built in this order.',
@@ -159,7 +252,7 @@ export const en = {
   // ——— Four tiers. Full is the anchor: it is the one that carries PDF and
   // every document type still to come, which is the whole reason it exists.
   'landing.whatYouGet': 'What you get',
-  'landing.get1': 'Line items priced for a mid-size group show, all of them editable',
+  'landing.get1': 'Priced line items generated from the sample brief, all editable',
   'landing.get2': 'A spreadsheet you can attach to a funding application',
   'landing.get2Figure': '.xlsx',
   'landing.get3': 'Accounts to create, sign-ups to complete, data we keep',
@@ -209,14 +302,15 @@ export const en = {
   'faq.q3': 'Where is my budget stored?',
   'faq.a3':
     'Nowhere. It lives in the browser tab. Save a .json file to keep it, and open that file again to carry on.',
-  'faq.q4': 'Can I change the categories and the figures?',
+  'faq.q4': 'What if I disagree with a figure?',
   'faq.a4':
-    'Every line is editable and you can add or remove lines in any category. The defaults are a starting point, not a rule.',
+    'Yes. The generated budget is a starting point, not a verdict: every line is editable, you can add or remove lines in any category, and you can change the brief and generate again.',
   'faq.q5': 'What is the difference between Single and Full?',
   'faq.a5':
     'Single unlocks the budget generator and its spreadsheet. Full adds PDF export and every other document type — production, press, public programme, timelines — including the ones not built yet.',
 
   'action.buildBudget': 'Build a budget',
+  'action.describeShow': 'Describe your exhibition',
   'action.seePricing': 'See what it costs',
   'action.openGenerator': 'Open the generator',
   'action.buyLicense': 'Coming soon',
