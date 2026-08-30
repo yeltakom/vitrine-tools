@@ -93,4 +93,94 @@ export const en = {
   'xlsx.subtotal': 'Subtotal',
   'xlsx.total': 'Total (EUR, netto)',
   'xlsx.fileName': 'exhibition-budget',
+  // ——— Landing page. The hero is the product's own output, so most of the copy
+  // here labels a document rather than selling one.
+  'landing.pageTitle': 'Exhibition budgets you can hand to a funder',
+  'landing.pageDescription':
+    'Build an exhibition budget line by line in the browser and download it as a spreadsheet. No account, nothing stored.',
+  'landing.documentLabel': 'sample budget',
+  'landing.sampleTitle': 'Soft interiors',
+  'landing.sampleVenue': 'Kunstverein Leipzig — March to June 2026',
+  'landing.heroNote':
+    'That is the product. Every figure above is editable, the categories are yours to change, and the result downloads as a spreadsheet.',
+
+  'landing.whatYouGet': 'What you get',
+  'landing.get1': 'Line items priced for a mid-size group show, all of them editable',
+  'landing.get2': 'A spreadsheet you can attach to a funding application',
+  'landing.get2Figure': '.xlsx',
+  'landing.get3': 'Accounts to create, sign-ups to complete, data we keep',
+  'landing.get3Figure': '0',
+
+  'landing.price': 'Price',
+  'landing.priceFigure': '29,00',
+  'landing.priceNote':
+    'One payment in EUR, no subscription and no seat count. The total including VAT for your country is shown at checkout.',
+
+  'landing.questions': 'Questions',
+  'faq.q1': 'What do I actually download?',
+  'faq.a1':
+    'An .xlsx file: your line items, a subtotal for each category and a total. It opens in Excel, Numbers and LibreOffice.',
+  'faq.q2': 'Is the free version usable on real projects?',
+  'faq.a2':
+    'Yes. Today the generator is free in full: unlimited lines and a clean spreadsheet. Once the license goes on sale the free export will be capped at 25 lines and will carry a small “Made with vitrine.tools” note.',
+  'faq.q3': 'Where is my budget stored?',
+  'faq.a3':
+    'Nowhere. It lives in the browser tab. Save a .json file to keep it, and open that file again to carry on.',
+  'faq.q4': 'Can I change the categories and the figures?',
+  'faq.a4':
+    'Every line is editable and you can add or remove lines in any category. The defaults are a starting point, not a rule.',
+  'faq.q5': 'How is VAT handled?',
+  'faq.a5':
+    'Checkout runs through Lemon Squeezy as merchant of record. They add the VAT of your country to the price above, show you the total before you pay, and issue the invoice.',
+
+  'action.openGenerator': 'Open the generator',
+  'action.buyLicense': 'Buy a license — coming soon',
+
+  'footer.impressum': 'Impressum',
+  'footer.privacy': 'Privacy',
+
+  // ——— Legal pages. Bracketed entries are placeholders a human must fill in.
+  'legal.draftNotice': 'Draft. This page is incomplete and must be reviewed before launch.',
+  'legal.documentLabel': 'legal',
+
+  'impressum.pageTitle': 'Impressum',
+  'impressum.intro': 'Information required under § 5 DDG.',
+  'impressum.providerLabel': 'Provider',
+  'impressum.provider': '[TBD — legal name and postal address]',
+  'impressum.contactLabel': 'Contact',
+  'impressum.contact': '[TBD — email address]',
+  'impressum.responsibleLabel': 'Responsible for content',
+  'impressum.responsible': '[TBD — name and address, § 18 Abs. 2 MStV]',
+  'impressum.vatLabel': 'VAT',
+  'impressum.vat':
+    'Small business under § 19 UStG: invoices issued directly show no VAT, and none can be deducted from them. Sales through this site run through Lemon Squeezy as merchant of record, who sell to you in their own name and charge and remit VAT themselves.',
+  'impressum.disputeLabel': 'Dispute resolution',
+  'impressum.dispute':
+    'We are neither obliged nor willing to take part in dispute resolution proceedings before a consumer arbitration board (§ 36 VSBG).',
+
+  'privacy.pageTitle': 'Privacy',
+  'privacy.intro': 'What this site does and does not do with your data.',
+  'privacy.controllerLabel': 'Controller',
+  'privacy.controller': '[TBD — see Impressum]',
+  'privacy.dataLabel': 'What this site collects',
+  'privacy.data':
+    'Nothing you type. The generator runs entirely in your browser: titles, line items and figures are never sent to a server and are gone when you close the tab. Saving a .json or .xlsx file writes it straight to your device.',
+  'privacy.cookiesLabel': 'Cookies and tracking',
+  'privacy.cookies':
+    'None. There is no analytics, no tracking pixel and no advertising network on this site.',
+  'privacy.fontsLabel': 'Fonts',
+  'privacy.fonts':
+    'JetBrains Mono is served from this domain. Your browser makes no request to Google Fonts or any other third party.',
+  'privacy.hostingLabel': 'Hosting',
+  'privacy.hosting':
+    'The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA, as a processor under a data processing agreement. Vercel processes server log data, including your IP address, in order to deliver the pages and defend against attacks. Legal basis: Art. 6(1)(f) GDPR. This involves a transfer to the United States, covered by the EU standard contractual clauses.',
+  'privacy.paymentsLabel': 'Payments',
+  'privacy.payments':
+    'Checkout is not live yet. When it is, it will run through Lemon Squeezy as merchant of record, and the details you enter at checkout will be processed by them under their own privacy policy.',
+  'privacy.rightsLabel': 'Your rights',
+  'privacy.rights':
+    'You can request access to, correction of, deletion of, restriction of and portability of any personal data held about you, and you can object at any time to processing based on Art. 6(1)(f) GDPR (Art. 21). You can also complain to a supervisory authority. Because the generator stores nothing, there is usually nothing to request.',
+  'privacy.updatedLabel': 'Last updated',
+  'privacy.updated': '[TBD]',
+
 } as const

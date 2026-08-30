@@ -92,6 +92,11 @@ export function sumRows(rows: BudgetRow[]): number {
   return rows.reduce((total, row) => total + rowAmount(row), 0)
 }
 
+/** "13 lines · EUR netto". Shared so the printed and the editable ledger agree. */
+export function summaryLabel(count: number): string {
+  return count === 1 ? t('ledger.summaryOne') : t('ledger.summaryMany', { count })
+}
+
 export function orderedCategories(): readonly BudgetCategoryId[] {
   return budgetCategoryOrder
 }

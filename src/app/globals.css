@@ -66,8 +66,12 @@ body {
   border-bottom-color: var(--ink);
 }
 
-.cell:focus-visible,
-.ghost:focus-visible {
+/* The quality floor, declared once for everything focusable rather than
+   remembered per component. Unlayered, so no utility can quietly remove it. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
@@ -76,8 +80,34 @@ body {
   border-bottom-color: transparent;
 }
 
+/* The document's own name outranks its lines. Same rung as the printed title
+   on the landing page, so a budget looks the same before and after you edit it. */
 .cell-title {
+  font-size: 20px;
   font-weight: 700;
+  line-height: 1.3;
+}
+
+/* A control with no chrome of its own. Preflight already strips a button's
+   background, colour, radius and font, so `.ghost` restores nothing but the
+   pointer. It must declare no paint property: rules in this file sit outside
+   Tailwind's layers and would beat the `hover:bg-ink` on the buttons using it. */
+.ghost:enabled,
+a.ghost {
+  cursor: pointer;
+}
+
+/* Underlined at a hairline, thickened on hover. Weight is not used for link
+   hover because the masthead wordmark is already heavier than bold. */
+.link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.link:hover {
+  text-decoration-thickness: 2px;
 }
 
 /* Room for the multiplication sign that trails the quantity. */

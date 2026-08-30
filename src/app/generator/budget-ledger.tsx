@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import {
   budgetCategoryLabelKeys,
@@ -17,6 +18,7 @@ import {
   parseNumber,
   rowAmount,
   rowsInCategory,
+  summaryLabel,
   sumRows,
   type BudgetRow,
 } from '@/lib/budget'
@@ -26,21 +28,18 @@ import {
   type BudgetFileErrorCode,
 } from '@/lib/budget-file'
 import { downloadBudgetXlsx } from '@/lib/export-xlsx'
-
-/* De-emphasis is scale and weight, not a lighter ink. Three rungs sit at 11px —
-   bold uppercase for structure, regular uppercase for the document label,
-   regular sentence case for hints — under 13/14px 500 body and 14px 700 figures. */
-const LABEL = 'text-[11px] font-bold uppercase tracking-[0.16em]'
-const LABEL_LIGHT = 'text-[11px] font-normal uppercase tracking-[0.16em]'
-const HINT = 'text-[11px] font-normal'
-const GUTTER = 'px-[2ch] sm:px-[3ch]'
-
-/** Narrow screens stack the line over its figures; the character grid takes over at sm. */
-const ROW =
-  'flex flex-col gap-[2px] py-[8px] sm:grid sm:h-10 sm:grid-cols-[1fr_6ch_12ch_14ch] sm:items-center sm:gap-x-[2ch] sm:gap-y-0 sm:py-0'
-const FIGURES = 'flex items-baseline gap-[1ch] sm:contents'
-const CATEGORY_GRID =
-  'grid h-10 items-center grid-cols-[auto_1fr_10ch] gap-x-[1ch] sm:grid-cols-[auto_1fr_14ch] sm:gap-x-[2ch]'
+import {
+  BUTTON,
+  CATEGORY_GRID,
+  FIGURES,
+  GUTTER,
+  HINT,
+  LABEL,
+  LABEL_LIGHT,
+  ROW,
+  WORDMARK,
+} from '../ledger-style'
+import SiteFooter from '../site-footer'
 
 /** A rejected file names its own problem. One key per validator verdict. */
 const FILE_ERROR_KEYS: Record<BudgetFileErrorCode, TranslationKey> = {
@@ -166,6 +165,10 @@ export default function BudgetLedger() {
   return (
     <main className="min-h-screen bg-paper text-ink text-[13px] leading-[1.6] sm:text-[14px]">
       <div className="mx-auto max-w-[78ch]">
+        {/* The page's own heading. The visible document name is an input, which
+            cannot be a heading, so the structural one is read out only. */}
+        <h1 className="sr-only">{t('generator.pageTitle')}</h1>
+
         {/* Masthead, then a rule-spanned action bar: the working file on the left,
             the document you hand over on the right. Same hairline device as a
             category and its subtotal, doing the same job — separating a name
@@ -173,9 +176,12 @@ export default function BudgetLedger() {
         <header className={GUTTER}>
           <div className="border-b border-ink pb-[12px] pt-[16px]">
             <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[2px]">
-              <span className="text-[14px] font-extrabold uppercase tracking-[0.18em]">
+              <Link
+                className={`ghost ${WORDMARK} underline-offset-[3px] hover:underline`}
+                href="/"
+              >
                 {t('app.wordmark')}
-              </span>
+              </Link>
               <span className={LABEL_LIGHT}>{t('generator.documentLabel')}</span>
             </div>
 
@@ -197,7 +203,7 @@ export default function BudgetLedger() {
               <span className="hidden h-px flex-1 bg-ink sm:block" aria-hidden="true" />
               <button
                 type="button"
-                className={`ghost ml-auto border border-ink px-[1.5ch] py-[6px] ${LABEL} enabled:hover:bg-ink enabled:hover:text-paper disabled:cursor-not-allowed disabled:border-transparent disabled:font-normal`}
+                className={`ghost ml-auto ${BUTTON} enabled:hover:bg-ink enabled:hover:text-paper disabled:cursor-not-allowed disabled:border-transparent disabled:font-normal`}
                 onClick={() => {
                   void handleDownload()
                 }}
@@ -381,13 +387,9 @@ export default function BudgetLedger() {
           )
         })}
 
-        <footer className={`${GUTTER} pb-[48px] pt-[16px]`}>
+        <section className={`${GUTTER} pt-[16px]`}>
           <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[8px] border-t border-ink py-[20px]">
-            <span className={HINT}>
-              {rows.length === 1
-                ? t('ledger.summaryOne')
-                : t('ledger.summaryMany', { count: rows.length })}
-            </span>
+            <span className={HINT}>{summaryLabel(rows.length)}</span>
             <span className="ml-auto flex items-baseline gap-[2ch]">
               <span className={LABEL}>{t('ledger.total')}</span>
               <span className="figure figure-total text-[28px] text-mark">
@@ -399,7 +401,9 @@ export default function BudgetLedger() {
             <span className="block h-[5px] w-[5px] shrink-0 bg-mark" aria-hidden="true" />
             {t('ledger.deviationLegend')}
           </p>
-        </footer>
+        </section>
+
+        <SiteFooter />
       </div>
     </main>
   )

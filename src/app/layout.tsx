@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
+import { t } from '@/i18n'
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -10,8 +11,9 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'VITRINE.TOOLS — Exhibition Planning Toolkit',
-  description: 'Professional exhibition documents in seconds. Proposals, budgets, timelines, checklists — customized to your project.',
+  metadataBase: new URL('https://vitrine.tools'),
+  title: `${t('app.wordmark')} — ${t('landing.pageTitle')}`,
+  description: t('landing.pageDescription'),
 }
 
 export default function RootLayout({
