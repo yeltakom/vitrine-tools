@@ -5,7 +5,7 @@ Work top to bottom. Tick boxes as you go. One task = one commit.
 ## Milestone 1 — Paid loop live (target: first paying user)
 
 ### Generator hardening
-- [ ] Move generator into `/generator` route as a proper page (not a component demo)
+- [x] Move generator into `/generator` route as a proper page (not a component demo)
 - [ ] Persist current budget in URL/localStorage-free state (React state + optional JSON import/export so users don't lose work)
 - [ ] Add "Import JSON / Export JSON" so users can save and reload budgets without accounts
 - [ ] Add PDF export alongside .xlsx (client-side, same data model)

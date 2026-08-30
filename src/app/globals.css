@@ -1,44 +1,125 @@
 @import "tailwindcss";
 
+/* Three colours. There is no fourth. Hairlines do the structural work and
+   de-emphasis is carried by scale and weight, never by a lighter ink. */
+@theme {
+  --color-ink: #000000;
+  --color-paper: #FFFFFF;
+  --color-mark: #E30613;
+}
+
 :root {
-  --bg: #FFFFFF;
-  --text: #000000;
-  --accent: #FF0000;
-  --muted: #888888;
-  --border: #000000;
-  --light: #F5F5F5;
+  --ink: var(--color-ink);
+  --paper: var(--color-paper);
+  --mark: var(--color-mark);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0A0A0A;
-    --text: #FFFFFF;
-    --accent: #FF3333;
-    --muted: #777777;
-    --border: #FFFFFF;
-    --light: #151515;
-  }
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* Rules below sit outside Tailwind's cascade layers, so they win over utilities.
+   Keep them free of anything a utility class is expected to override. */
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-mono), monospace;
   line-height: 1.5;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--accent);
-  color: var(--bg);
+  background: var(--mark);
+  color: var(--paper);
+}
+
+/* A ledger cell is text in a document, not a form field.
+   Hover reveals a 1px rule; focus reveals the ring. */
+.cell {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  line-height: inherit;
+  outline: none;
+  appearance: none;
+}
+
+/* Placeholders keep the browser's own rendering — the one de-emphasis on the page
+   we do not author, so it stays out of the palette. Tailwind's preflight sets
+   `color: color-mix(currentcolor 50%)` and `opacity: 1`; both are reverted so the
+   user agent decides, rather than us declaring a translucent ink by proxy. */
+.cell::placeholder {
+  color: revert;
+  opacity: revert;
+}
+
+.cell:hover {
+  border-bottom-color: var(--ink);
+}
+
+.cell:focus-visible,
+.ghost:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.cell:focus-visible {
+  border-bottom-color: transparent;
+}
+
+.cell-title {
+  font-weight: 700;
+}
+
+/* Room for the multiplication sign that trails the quantity. */
+.cell-qty {
+  padding-right: 1.5ch;
+}
+
+.figure {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The single large number on the page. */
+.figure-total {
+  font-weight: 800;
+}
+
+/* The one piece of motion on the page: the deviation mark arriving. */
+@keyframes mark-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mark-in {
+  animation: mark-in 120ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
