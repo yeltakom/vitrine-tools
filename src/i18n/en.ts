@@ -95,13 +95,43 @@ export const en = {
   'xlsx.subtotal': 'Subtotal',
   'xlsx.total': 'Total (EUR, netto)',
   'xlsx.fileName': 'exhibition-budget',
-  // ——— Landing page. The hero is the product's own output, so most of the copy
-  // here labels a document rather than selling one.
+  // ——— Landing page. The site has to explain the business, not only run the
+  // tool: what the file is, why it is broken, what this replaces it with.
   'landing.pageTitle': 'Exhibition budgets you can hand to a funder',
   'landing.pageDescription':
-    'Build an exhibition budget line by line in the browser and download it as a spreadsheet. No account, nothing stored.',
+    'Exhibition planning documents for freelance curators and small institutions. Start from a priced budget template, change what differs, download an .xlsx. No account.',
+  'landing.documentLabel': 'exhibition planning tools',
+
   'landing.sampleTitle': 'Soft interiors',
   'landing.sampleVenue': 'Kunstverein Leipzig',
+
+  'hero.headline': 'Exhibition budgets without the inherited spreadsheet.',
+  'hero.lede':
+    'Start from a template that is already priced, change what differs, and download an .xlsx a funder can open. Built for freelance curators and small institutions that plan shows without a finance department.',
+  'hero.timeLabel': 'Time to your first spreadsheet',
+  'hero.timeFigure': '10 min',
+  'hero.costLabel': 'What that costs',
+  'hero.costFigure': '0,00',
+
+  'section.why': 'Why this exists',
+  'why.body1':
+    'Every exhibition budget starts as a file someone else built. It arrives from a colleague or a previous show, gets passed between institutions, and by the time it reaches you nobody remembers which cells are formulas and which were typed over. It breaks quietly: a subtotal that stopped covering the last three rows, an artist fee renamed but never re-linked, Aufbau and Abbau counted once between them.',
+  'why.body2':
+    'The categories barely change from show to show — fees, transport and insurance, installation, production, communication, public programme — and the same numbers have to survive twice: once in the application, and again in the Verwendungsnachweis a year later. What changes every time is the file. So the file is the thing worth replacing.',
+
+  'section.how': 'How it works',
+  'how.startLabel': 'Start',
+  'how.startBody':
+    'Open the generator. Curatorial and artist fees, nail-to-nail insurance, freight, courier per diems, Aufbau and Abbau crews — the categories arrive already priced at mid-size group-show rates, so the first thing you do is edit a budget rather than invent one.',
+  'how.changeLabel': 'Change',
+  'how.changeBody':
+    'Type over any figure. Add lines, remove what you do not need, rename anything. Changed lines carry a mark, so you can see what is yours and what is still boilerplate.',
+  'how.downloadLabel': 'Download',
+  'how.downloadBody':
+    'Take the .xlsx. Subtotals per category and a total are calculated inside the file, so it can go straight into an application and still make sense to a Verwaltung reading it a year later.',
+
+  'section.try': 'Try it',
+  'try.note': 'This is the working generator, not a picture of one. Anything you change here is in the file you download.',
 
   'landing.whatYouGet': 'What you get',
   'landing.get1': 'Line items priced for a mid-size group show, all of them editable',
@@ -110,10 +140,32 @@ export const en = {
   'landing.get3': 'Accounts to create, sign-ups to complete, data we keep',
   'landing.get3Figure': '0',
 
-  'landing.price': 'Price',
+  'section.documents': 'Documents',
+  'documents.note': 'One document type works today. The rest are being built in this order.',
+  'documents.budget': 'Exhibition budget',
+  'documents.production': 'Production budget',
+  'documents.press': 'Communication and press budget',
+  'documents.programme': 'Public programme budget',
+  'documents.timeline': 'Timeline and install schedule',
+  'status.ready': 'ready',
+  'status.next': 'next',
+  'status.later': 'later',
+
+  'section.who': 'Who it is for',
+  'who.1': 'Freelance curators writing an application with no institution behind them',
+  'who.2': 'Kunstvereine, project spaces and artist-run initiatives with no finance office',
+  'who.3': 'Producers and exhibition designers costing a show before the funding is confirmed',
+
+  'section.pricing': 'What it costs',
+  'pricing.freeLabel': 'Free',
+  'pricing.freeBody': 'Edit everything, download the spreadsheet, up to 25 lines.',
+  'pricing.freeFigure': '0,00',
+  'pricing.licenceLabel': 'License',
+  'pricing.licenceBody':
+    'No line limit, no watermark, PDF export, every document type as it lands. One payment, not a subscription.',
   'landing.priceFigure': '29,00',
   'landing.priceNote':
-    'One payment in EUR, no subscription and no seat count. The total including VAT for your country is shown at checkout.',
+    'Prices in EUR. Checkout adds the VAT of your country and shows you the total before you pay.',
 
   'landing.questions': 'Questions',
   'faq.q1': 'What do I actually download?',
@@ -132,6 +184,8 @@ export const en = {
   'faq.a5':
     'Checkout runs through Lemon Squeezy as merchant of record. They add the VAT of your country to the price above, show you the total before you pay, and issue the invoice.',
 
+  'action.buildBudget': 'Build a budget',
+  'action.seePricing': 'See what it costs',
   'action.openGenerator': 'Open the generator',
   'action.buyLicense': 'Buy a license — coming soon',
 

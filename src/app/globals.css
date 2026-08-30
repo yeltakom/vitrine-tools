@@ -115,6 +115,29 @@ a.ghost {
   font-variant-numeric: tabular-nums;
 }
 
+/* The one loud rung. Mono at this size sets its own rhythm, so the tracking is
+   pulled in and the leading pushed down until the block reads as a mass rather
+   than as three separate lines. Used once per page, in the hero. */
+.display {
+  font-size: clamp(28px, 5.6vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+/* One rung between the display and the body, so the opening paragraph is not
+   asked to carry a 46px headline at caption weight. */
+.lede {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+@media (min-width: 640px) {
+  .lede {
+    font-size: 17px;
+  }
+}
+
 /* The single large number on the page. */
 .figure-total {
   font-weight: 800;

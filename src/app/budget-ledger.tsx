@@ -39,7 +39,6 @@ import {
   ROW,
   WORDMARK,
 } from './ledger-style'
-import SiteFooter from './site-footer'
 
 /** A rejected file names its own problem. One key per validator verdict. */
 const FILE_ERROR_KEYS: Record<BudgetFileErrorCode, TranslationKey> = {
@@ -96,17 +95,14 @@ function FigureCell({
  * nothing on /generator, the sections that explain the product on the landing page.
  */
 export default function BudgetLedger({
-  heading,
+  masthead = true,
   initialTitle = '',
   initialVenue = '',
-  footerAction,
-  children,
 }: {
-  heading?: string
+  /** The wordmark line. Off when a page already carries one above the ledger. */
+  masthead?: boolean
   initialTitle?: string
   initialVenue?: string
-  footerAction?: { href: string; label: string }
-  children?: React.ReactNode
 }) {
   const [title, setTitle] = useState(initialTitle)
   const [venue, setVenue] = useState(initialVenue)
@@ -186,29 +182,27 @@ export default function BudgetLedger({
   }
 
   return (
-    <main className="min-h-screen bg-paper text-ink text-[13px] leading-[1.6] sm:text-[14px]">
-      <div className="mx-auto max-w-[78ch]">
-        {/* The page's own heading. The visible document name is an input, which
-            cannot be a heading, so the structural one is read out only. */}
-        <h1 className="sr-only">{heading ?? t('generator.pageTitle')}</h1>
-
-        {/* Masthead, then a rule-spanned action bar: the working file on the left,
-            the document you hand over on the right. Same hairline device as a
-            category and its subtotal, doing the same job — separating a name
-            from the figure it settles. */}
+    <>
+      <div>
+        {/* A rule-spanned action bar: the working file on the left, the document
+            you hand over on the right. Same hairline device as a category and its
+            subtotal, doing the same job — separating a name from the figure it
+            settles. */}
         <header className={GUTTER}>
           <div className="border-b border-ink pb-[12px] pt-[16px]">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[2px]">
-              <Link
-                className={`ghost ${WORDMARK} underline-offset-[3px] hover:underline`}
-                href="/"
-              >
-                {t('app.wordmark')}
-              </Link>
-              <span className={LABEL_LIGHT}>{t('generator.documentLabel')}</span>
-            </div>
+            {masthead ? (
+              <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[2px]">
+                <Link
+                  className={`ghost ${WORDMARK} underline-offset-[3px] hover:underline`}
+                  href="/"
+                >
+                  {t('app.wordmark')}
+                </Link>
+                <span className={LABEL_LIGHT}>{t('generator.documentLabel')}</span>
+              </div>
+            ) : null}
 
-            <p className={`mt-[10px] ${HINT}`}>{t('ledger.instruction')}</p>
+            <p className={masthead ? `mt-[10px] ${HINT}` : HINT}>{t('ledger.instruction')}</p>
 
             <div className="mt-[12px] flex flex-wrap items-center gap-x-[2ch] gap-y-[8px]">
               <button
@@ -428,10 +422,7 @@ export default function BudgetLedger({
           </p>
         </section>
 
-        {children}
-
-        <SiteFooter action={footerAction} />
       </div>
-    </main>
+    </>
   )
 }

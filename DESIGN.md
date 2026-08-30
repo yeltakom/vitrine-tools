@@ -32,18 +32,23 @@ It is the same device for a category and its subtotal, for the masthead and its 
 and for a section head and its number.
 
 ## Signature
-**The landing page is the generator.** Not a picture of it, not a read-only sample: the same
-live component, seeded with a real show, that a visitor types into and downloads from without
-going anywhere else. There is no headline and no hero copy — one instruction line ("Type over
-any figure…") and then the working document.
+**Every section is a budget line.** A section head, a document's build status, a price and
+the hero's own promise are all the same object: a name on the left, a hairline, and the figure
+that settles it. The marketing reads as part of the ledger rather than as writing about it.
 
-Every section below keeps the ledger's grammar: a label on the left, a hairline, a figure on
-the right. What you get is three ledger lines (`13`, `.xlsx`, `0`). The price is one more
-line — `29,00`, set in the same red the total is set in.
+The hero states the business — this is a startup site, not a bare calculator — and is
+answered immediately by two ledger lines pricing the reader's next step: `10 min` and `0,00`,
+the second set in the same red the tool sets a total in.
 
-Because the hero is live, every editable cell carries its 1px rule **at rest** rather than on
-hover. A budget whose fields only appear when the pointer finds them reads as a screenshot,
-and a screenshot is the one thing this page must not be.
+Halfway down, under "Try it", the **real generator** is embedded. Not a screenshot, not a
+read-only copy: the same component `/generator` runs, seeded with a sample show. Whatever a
+visitor types there is in the file they download. Because that ledger is live, every editable
+cell carries its 1px rule **at rest** rather than on hover — a budget whose fields appear only
+under the pointer reads as a print-out, which is the one thing this page must not be.
+
+The brief asked the page to open on a working table rather than a headline. The owner
+overruled that: the site has to explain the business first. What the brief keeps is the
+grammar above, which is why the page still could not be mistaken for a generic SaaS landing.
 
 ## Critique — would a generic AI produce this?
 A generic pass produces: headline hero + subhead + CTA, three feature cards with icons, a

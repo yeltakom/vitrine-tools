@@ -25,9 +25,10 @@ Work top to bottom. Tick boxes as you go. One task = one commit.
 - [ ] Webhook route `/api/webhooks/lemonsqueezy` for `order_created` (log only for now; no DB)
 
 ### Landing page (minimal, after paid loop works)
-- [x] Finish React migration of landing page — hero = the live generator itself, seeded with a sample show
-      (went further than the item asked: read-only would have been a screenshot, so the homepage ledger is editable)
-- [x] Sections: what you get (3 rows, not cards), pricing (one number), FAQ (5 questions), footer
+- [x] Finish React migration of landing page — headline, the case for the tool, and the live
+      generator embedded mid-page under "Try it" (seeded, editable, downloads what you type)
+- [x] Sections: why this exists, how it works, try it, what you get (3 rows, not cards),
+      documents roadmap, who it is for, pricing (free vs €29), FAQ (5 questions), footer
 - [ ] Impressum + Privacy policy pages (required before launch, Germany). Claude drafts; human reviews.
       Drafted at `/impressum` and `/privacy`. Both carry a visible draft notice and `[TBD]` placeholders
       (legal name, address, email, last-updated date). HUMAN TASK: fill those in and review, then tick.
