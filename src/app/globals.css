@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap');
 
 :root {
   --bg: #FFFFFF;
@@ -34,7 +33,7 @@ html {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono), monospace;
   line-height: 1.5;
   overflow-x: hidden;
 }
