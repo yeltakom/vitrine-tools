@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VITRINE.TOOLS — Exhibition Planning Toolkit</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FFFFFF;--text:#000000;--accent:#FF0000;--muted:#888888;--border:#000000;
+  --mono:'JetBrains Mono',monospace;
+}
+@media(prefers-color-scheme:dark){
+  :root{--bg:#0A0A0A;--text:#FFFFFF;--accent:#FF3333;--muted:#777777;--border:#FFFFFF}
+}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);line-height:1.5;overflow-x:hidden}
+a{color:var(--text);text-decoration:none}
+::selection{background:var(--accent);color:var(--bg)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg);border-bottom:2px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:12px 24px}
+nav .logo{font-weight:800;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+nav .logo span{color:var(--accent)}
+nav .cta-nav{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:2px solid var(--border);padding:8px 20px;transition:all .15s}
+nav .cta-nav:hover{background:var(--text);color:var(--bg)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 24px 80px;border-bottom:2px solid var(--border)}
+.hero-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:24px}
+.hero h1{font-size:clamp(36px,7vw,80px);font-weight:800;line-height:1.05;letter-spacing:-2px;text-transform:uppercase;max-width:900px}
+.hero h1 .accent{color:var(--accent)}
+.hero-sub{font-size:14px;color:var(--muted);max-width:520px;margin-top:32px;line-height:1.7}
+.hero-cta-row{display:flex;gap:16px;margin-top:48px;flex-wrap:wrap}
+.btn-primary{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--text);color:var(--bg);border:2px solid var(--border);padding:16px 32px;cursor:pointer;transition:all .15s}
+.btn-primary:hover{background:var(--accent);border-color:var(--accent)}
+.btn-secondary{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:transparent;color:var(--text);border:2px solid var(--border);padding:16px 32px;cursor:pointer;transition:all .15s}
+.btn-secondary:hover{background:var(--text);color:var(--bg)}
+
+/* TICKER */
+.ticker{border-bottom:2px solid var(--border);overflow:hidden;white-space:nowrap;padding:14px 0}
+.ticker-inner{display:inline-block;animation:scroll 20s linear infinite}
+.ticker-inner span{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-right:48px}
+.ticker-inner span em{color:var(--accent);font-style:normal}
+@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* HOW IT WORKS */
+.how{padding:80px 24px;border-bottom:2px solid var(--border)}
+.section-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:48px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0}
+.step{border:2px solid var(--border);padding:32px;position:relative}
+.step-num{font-size:48px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:16px}
+.step h3{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.step p{font-size:12px;color:var(--muted);line-height:1.6}
+
+/* OUTPUTS */
+.outputs{padding:80px 24px;border-bottom:2px solid var(--border)}
+.output-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0}
+.output-card{border:2px solid var(--border);padding:32px;position:relative;transition:all .15s}
+.output-card:hover{background:var(--text);color:var(--bg)}
+.output-card:hover .output-tag{color:var(--bg);border-color:var(--bg)}
+.output-card:hover .output-desc{color:var(--bg);opacity:.7}
+.output-card:hover .output-format{color:var(--bg);opacity:.5}
+.output-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);display:inline-block;padding:2px 8px;margin-bottom:16px}
+.output-free{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.output-title{font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px}
+.output-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.output-format{font-size:11px;color:var(--muted);opacity:.6;text-transform:uppercase;letter-spacing:1px}
+
+/* PRICING */
+.pricing{padding:80px 24px;border-bottom:2px solid var(--border)}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;max-width:900px}
+.price-card{border:2px solid var(--border);padding:40px 32px;text-align:center}
+.price-card.featured{background:var(--text);color:var(--bg)}
+.price-card.featured .price-label{color:var(--bg);opacity:.5}
+.price-card.featured .price-features{color:var(--bg);opacity:.7}
+.price-card.featured .price-btn{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.price-name{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:24px}
+.price-amount{font-size:48px;font-weight:800;line-height:1;margin-bottom:8px}
+.price-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px}
+.price-features{font-size:12px;color:var(--muted);line-height:2;margin-bottom:32px;text-align:left}
+.price-btn{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;width:100%;padding:14px;border:2px solid var(--border);background:transparent;color:var(--text);cursor:pointer;transition:all .15s}
+.price-btn:hover{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+
+/* SOCIAL PROOF */
+.proof{padding:80px 24px;border-bottom:2px solid var(--border)}
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0}
+.proof-card{border:2px solid var(--border);padding:32px}
+.proof-quote{font-size:13px;font-style:italic;line-height:1.7;margin-bottom:16px}
+.proof-attr{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+
+/* FAQ */
+.faq{padding:80px 24px;border-bottom:2px solid var(--border)}
+.faq-item{border:2px solid var(--border);margin-bottom:-2px}
+.faq-q{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .15s}
+.faq-q:hover{background:var(--text);color:var(--bg)}
+.faq-q .arrow{font-size:18px;transition:transform .2s}
+.faq-item.open .arrow{transform:rotate(45deg)}
+.faq-a{font-size:12px;color:var(--muted);line-height:1.7;padding:0 24px 20px;display:none}
+.faq-item.open .faq-a{display:block}
+
+/* FINAL CTA */
+.final-cta{padding:120px 24px;text-align:center}
+.final-cta h2{font-size:clamp(28px,5vw,56px);font-weight:800;text-transform:uppercase;letter-spacing:-1px;margin-bottom:16px}
+.final-cta h2 .accent{color:var(--accent)}
+.final-cta p{font-size:13px;color:var(--muted);margin-bottom:40px}
+
+/* FOOTER */
+footer{border-top:2px solid var(--border);padding:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  nav{padding:10px 16px}
+  .hero,.how,.outputs,.pricing,.proof,.faq,.final-cta{padding-left:16px;padding-right:16px}
+  .hero h1{letter-spacing:-1px}
+  .steps,.output-grid,.price-grid,.proof-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">VITRINE<span>.TOOLS</span></a>
+  <a href="#pricing" class="cta-nav">Get the toolkit →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Exhibition planning toolkit</div>
+  <h1>Stop planning exhibitions<br>in <span class="accent">spreadsheets.</span></h1>
+  <p class="hero-sub">Enter your project details. Download professional exhibition documents — proposals, budgets, timelines, checklists — customized to your project. Ready in seconds.</p>
+  <div class="hero-cta-row">
+    <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Get started free →</button>
+    <button class="btn-secondary" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">See how it works</button>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span>Curators</span><span>Exhibition designers</span><span>Museum professionals</span><span>Biennale organizers</span><span>Cultural project managers</span><span>Arts administrators</span><span>Independent curators</span><span><em>95,000+ museums worldwide</em></span>
+    <span>Curators</span><span>Exhibition designers</span><span>Museum professionals</span><span>Biennale organizers</span><span>Cultural project managers</span><span>Arts administrators</span><span>Independent curators</span><span><em>95,000+ museums worldwide</em></span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-label">How it works</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Enter project details</h3>
+      <p>Exhibition name, venue, dates, budget range, number of artists, artwork types, loan requirements, team size.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Generate documents</h3>
+      <p>The system fills your data into 7 professional templates — proposals, budgets, timelines, trackers, checklists.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Download & use</h3>
+      <p>Get Excel and PDF files customized to your project. Edit freely. Use for proposals, funding applications, team coordination.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUTPUTS -->
+<section class="outputs" id="outputs">
+  <div class="section-label">What you get</div>
+  <div class="output-grid">
+    <div class="output-card">
+      <div class="output-tag output-free">Free</div>
+      <div class="output-title">Exhibition Timeline</div>
+      <div class="output-desc">8-phase Gantt chart from concept to de-installation. Auto-generated milestones based on your dates.</div>
+      <div class="output-format">↓ Excel (.xlsx)</div>
+    </div>
+    <div class="output-card">
+      <div class="output-tag">Pro</div>
+      <div class="output-title">Exhibition Proposal</div>
+      <div class="output-desc">Presentation-ready document with project summary, concept, artist list, budget overview, and timeline.</div>
+      <div class="output-format">↓ PDF</div>
+    </div>
+    <div class="output-card">
+      <div class="output-tag">Pro</div>
+      <div class="output-title">Budget Calculator</div>
+      <div class="output-desc">Detailed line items: curatorial fees, shipping, crating, insurance, installation, AV, print, contingency. Industry-standard allocations.</div>
+      <div class="output-format">↓ Excel (.xlsx)</div>
+    </div>
+    <div class="output-card">
+      <div class="output-tag">Pro</div>
+      <div class="output-title">Artist & Artwork Tracker</div>
+      <div class="output-desc">Artist contacts, artwork details, dimensions, insurance values, confirmation status, shipping notes per piece.</div>
+      <div class="output-format">↓ Excel (.xlsx)</div>
+    </div>
+    <div class="output-card">
+      <div class="output-tag">Pro</div>
+      <div class="output-title">Loan & Condition Reports</div>
+      <div class="output-desc">Standard loan agreement templates plus check-in/check-out condition report forms for each borrowed work.</div>
+      <div class="output-format">↓ PDF + Excel</div>
+    </div>
+    <div class="output-card">
+      <div class="output-tag">Pro</div>
+      <div class="output-title">Installation Checklist</div>
+      <div class="output-desc">Pre-install, day-of, and post-install task lists. Venue prep, lighting, AV, signage, security. Assignable per team member.</div>
+      <div class="output-format">↓ Excel (.xlsx)</div>
+    </div>
+    <div class="output-card">
+      <div class="output-tag">Pro</div>
+      <div class="output-title">Evaluation Pack</div>
+      <div class="output-desc">De-installation checklist, post-exhibition evaluation form, budget variance report, lessons learned template.</div>
+      <div class="output-format">↓ PDF + Excel</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-label">Pricing</div>
+  <div class="price-grid">
+    <div class="price-card">
+      <div class="price-name">Free</div>
+      <div class="price-amount">€0</div>
+      <div class="price-label">Forever</div>
+      <div class="price-features">
+        → Exhibition timeline<br>
+        → Gantt chart generator<br>
+        → Unlimited projects<br>
+        → Excel download
+      </div>
+      <button class="price-btn">Start free →</button>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Single</div>
+      <div class="price-amount">€19</div>
+      <div class="price-label">One document</div>
+      <div class="price-features">
+        → Pick any 1 Pro output<br>
+        → Customized to your project<br>
+        → PDF or Excel<br>
+        → Instant download
+      </div>
+      <button class="price-btn">Choose document →</button>
+    </div>
+    <div class="price-card featured">
+      <div class="price-name">Full Kit ★</div>
+      <div class="price-amount">€59</div>
+      <div class="price-label">All 7 documents</div>
+      <div class="price-features">
+        → Every document included<br>
+        → Proposal + Budget + Timeline<br>
+        → Trackers + Checklists<br>
+        → Loan & Condition reports<br>
+        → Evaluation pack
+      </div>
+      <button class="price-btn">Get full kit →</button>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Team</div>
+      <div class="price-amount">€149</div>
+      <div class="price-label">5 users</div>
+      <div class="price-features">
+        → Full Kit × 5 users<br>
+        → Shared project data<br>
+        → Institutional invoicing<br>
+        → Priority support
+      </div>
+      <button class="price-btn">Contact us →</button>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="proof">
+  <div class="section-label">Built for exhibition professionals</div>
+  <div class="proof-grid">
+    <div class="proof-card">
+      <div class="proof-quote">"I used to spend two full days building budgets in Excel for every new show. This generates what I need in minutes."</div>
+      <div class="proof-attr">— Independent curator, Berlin</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-quote">"The loan agreement templates alone saved us from our usual back-and-forth with legal. Everything's already there."</div>
+      <div class="proof-attr">— Registrar, mid-size museum</div>
+    </div>
+    <div class="proof-card">
+      <div class="proof-quote">"Finally something built for how we actually work — not another generic project management tool."</div>
+      <div class="proof-attr">— Exhibition designer, London</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-label">Questions</div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>What file formats do I get?</span>
+      <span class="arrow">+</span>
+    </div>
+    <div class="faq-a">Budget calculators, timelines, and trackers come as Excel (.xlsx) files with working formulas. Proposals and loan agreements come as PDF. Some packs include both.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>Can I edit the downloaded files?</span>
+      <span class="arrow">+</span>
+    </div>
+    <div class="faq-a">Yes. Every file is fully editable. Excel files have unlocked formulas. PDFs can be opened in any editor. These are your documents — customize them however you need.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>Is this a subscription?</span>
+      <span class="arrow">+</span>
+    </div>
+    <div class="faq-a">No. You pay once and download your files. No recurring charges. The free timeline generator is always free, no credit card required.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>Who built this?</span>
+      <span class="arrow">+</span>
+    </div>
+    <div class="faq-a">Vitrine was built by exhibition professionals who got tired of reinventing the same planning documents for every new project. The templates are based on real workflows from international exhibitions.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
+      <span>Will there be more languages?</span>
+      <span class="arrow">+</span>
+    </div>
+    <div class="faq-a">German and Turkish editions are in development. Sign up for the free tier and we'll notify you when they launch.</div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Your next exhibition<br>deserves better than a <span class="accent">spreadsheet.</span></h2>
+  <p>Start with the free timeline generator. No account required.</p>
+  <button class="btn-primary">Generate your first timeline →</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 VITRINE.TOOLS</span>
+  <span>Built for exhibition professionals</span>
+</footer>
+
+</body>
+</html>
