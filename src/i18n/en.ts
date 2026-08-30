@@ -45,6 +45,10 @@ export const en = {
   // The glyph on the remove-line control. Separate from `ledger.times`:
   // same character today, different meaning, and locales may diverge.
   'ledger.remove': '×',
+  // The glyph on the notice-band dismiss control. Separate from
+  // `ledger.remove` for the same reason: dismissing a message is not
+  // removing a budget line, and locales may diverge.
+  'notice.dismiss': '×',
   'ledger.total': 'Total',
   'ledger.empty': 'Add your first line item.',
   'ledger.deviationLegend': 'Changed from the template default',
@@ -54,6 +58,9 @@ export const en = {
   'action.addLine': '+ Add line',
   'action.removeLine': 'Remove {item}',
   'action.downloadXlsx': 'Download .xlsx',
+  'action.saveJson': 'Save .json',
+  'action.openJson': 'Open .json',
+  'action.dismissNotice': 'Dismiss this message',
 
   'a11y.description': 'Description of {item}',
   'a11y.quantity': 'Quantity of {item}',
@@ -62,6 +69,19 @@ export const en = {
   'a11y.venue': 'Venue',
   'a11y.newLine': 'New line item',
   'a11y.deviation': '{item} was changed from the template default',
+
+  // The .json working file: what leaves the page and comes back.
+  'json.fileName': 'exhibition-budget',
+  'json.loadedOne': '1 line loaded from {file}.',
+  'json.loadedMany': '{count} lines loaded from {file}.',
+  'json.errorNotJson': 'That file is not JSON. Open a .json file saved from this page.',
+  'json.errorNotBudget':
+    'That JSON is not a budget file. Open a .json file saved from this page.',
+  'json.errorNewerVersion':
+    'That budget was saved by a newer version of this page. Reload the page, then open the file again.',
+  'json.errorTooLarge':
+    'That file is too large to be a budget. Open a .json file saved from this page.',
+  'json.errorUnreadable': 'That file could not be read. Check it is still there, then open it again.',
 
   'xlsx.sheetName': 'Budget',
   'xlsx.colDescription': 'Description',

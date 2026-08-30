@@ -1,16 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   budgetCategoryLabelKeys,
   type BudgetCategoryId,
 } from '@/data/templates/exhibition-budget'
-import { t } from '@/i18n'
+import { t, type TranslationKey } from '@/i18n'
 import {
   createEmptyRow,
   createRowsFromTemplate,
   formatAmount,
   formatQuantity,
+  hasUnsavedWork,
   isDeviating,
   orderedCategories,
   parseNumber,
@@ -19,6 +20,11 @@ import {
   sumRows,
   type BudgetRow,
 } from '@/lib/budget'
+import {
+  downloadBudgetJson,
+  readBudgetFile,
+  type BudgetFileErrorCode,
+} from '@/lib/budget-file'
 import { downloadBudgetXlsx } from '@/lib/export-xlsx'
 
 /* De-emphasis is scale and weight, not a lighter ink. Three rungs sit at 11px —
@@ -35,6 +41,20 @@ const ROW =
 const FIGURES = 'flex items-baseline gap-[1ch] sm:contents'
 const CATEGORY_GRID =
   'grid h-10 items-center grid-cols-[auto_1fr_10ch] gap-x-[1ch] sm:grid-cols-[auto_1fr_14ch] sm:gap-x-[2ch]'
+
+/** A rejected file names its own problem. One key per validator verdict. */
+const FILE_ERROR_KEYS: Record<BudgetFileErrorCode, TranslationKey> = {
+  tooLarge: 'json.errorTooLarge',
+  unreadable: 'json.errorUnreadable',
+  notJson: 'json.errorNotJson',
+  notBudget: 'json.errorNotBudget',
+  newerVersion: 'json.errorNewerVersion',
+}
+
+/** Keeps a hostile or merely absurd filename from stretching the notice line. */
+function shortFileName(name: string): string {
+  return name.length > 48 ? `${name.slice(0, 47)}…` : name
+}
 
 function FigureCell({
   value,
@@ -73,8 +93,25 @@ export default function BudgetLedger() {
   const [venue, setVenue] = useState('')
   const [rows, setRows] = useState<BudgetRow[]>(() => createRowsFromTemplate())
   const [exporting, setExporting] = useState(false)
+  const [notice, setNotice] = useState<{ tone: 'error' | 'ok'; text: string } | null>(null)
+  const fileInput = useRef<HTMLInputElement>(null)
 
   const total = sumRows(rows)
+
+  /**
+   * The budget lives in this component and nowhere else, so a reload loses it.
+   * Warn only once there is something to lose — an untouched template is not work.
+   */
+  const unsaved = hasUnsavedWork({ title, venue, rows })
+  useEffect(() => {
+    if (!unsaved) return
+    function warn(event: BeforeUnloadEvent) {
+      event.preventDefault()
+      event.returnValue = ''
+    }
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [unsaved])
 
   function updateRow(id: string, patch: Partial<BudgetRow>) {
     setRows((current) => current.map((row) => (row.id === id ? { ...row, ...patch } : row)))
@@ -93,6 +130,30 @@ export default function BudgetLedger() {
     })
   }
 
+  function handleSaveJson() {
+    downloadBudgetJson({ title, venue, rows })
+  }
+
+  /** Nothing on screen changes until the file has passed every check. */
+  async function handleOpenJson(file: File) {
+    const result = await readBudgetFile(file)
+    if (!result.ok) {
+      setNotice({ tone: 'error', text: t(FILE_ERROR_KEYS[result.code]) })
+      return
+    }
+    setTitle(result.data.title)
+    setVenue(result.data.venue)
+    setRows(result.data.rows)
+    const name = shortFileName(file.name)
+    setNotice({
+      tone: 'ok',
+      text:
+        result.data.rows.length === 1
+          ? t('json.loadedOne', { file: name })
+          : t('json.loadedMany', { count: result.data.rows.length, file: name }),
+    })
+  }
+
   async function handleDownload() {
     setExporting(true)
     try {
@@ -105,27 +166,87 @@ export default function BudgetLedger() {
   return (
     <main className="min-h-screen bg-paper text-ink text-[13px] leading-[1.6] sm:text-[14px]">
       <div className="mx-auto max-w-[78ch]">
+        {/* Masthead, then a rule-spanned action bar: the working file on the left,
+            the document you hand over on the right. Same hairline device as a
+            category and its subtotal, doing the same job — separating a name
+            from the figure it settles. */}
         <header className={GUTTER}>
-          <div className="flex flex-wrap items-center justify-between gap-x-[2ch] gap-y-[4px] border-b border-ink py-[16px]">
-            <span className="order-1 text-[14px] font-extrabold uppercase tracking-[0.18em]">
-              {t('app.wordmark')}
-            </span>
-            <span className={`order-3 basis-full sm:order-2 sm:basis-auto ${LABEL_LIGHT}`}>
-              {t('generator.documentLabel')}
-            </span>
-            <button
-              type="button"
-              className={`ghost order-2 border border-ink px-[1.5ch] py-[6px] sm:order-3 ${LABEL} enabled:hover:bg-ink enabled:hover:text-paper disabled:cursor-not-allowed disabled:border-transparent disabled:font-normal`}
-              onClick={() => {
-                void handleDownload()
-              }}
-              disabled={exporting}
-              aria-busy={exporting}
-            >
-              {t('action.downloadXlsx')}
-            </button>
+          <div className="border-b border-ink pb-[12px] pt-[16px]">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[2px]">
+              <span className="text-[14px] font-extrabold uppercase tracking-[0.18em]">
+                {t('app.wordmark')}
+              </span>
+              <span className={LABEL_LIGHT}>{t('generator.documentLabel')}</span>
+            </div>
+
+            <div className="mt-[12px] flex flex-wrap items-center gap-x-[2ch] gap-y-[8px]">
+              <button
+                type="button"
+                className={`ghost ${HINT} hover:font-bold`}
+                onClick={() => fileInput.current?.click()}
+              >
+                {t('action.openJson')}
+              </button>
+              <button
+                type="button"
+                className={`ghost ${HINT} hover:font-bold`}
+                onClick={handleSaveJson}
+              >
+                {t('action.saveJson')}
+              </button>
+              <span className="hidden h-px flex-1 bg-ink sm:block" aria-hidden="true" />
+              <button
+                type="button"
+                className={`ghost ml-auto border border-ink px-[1.5ch] py-[6px] ${LABEL} enabled:hover:bg-ink enabled:hover:text-paper disabled:cursor-not-allowed disabled:border-transparent disabled:font-normal`}
+                onClick={() => {
+                  void handleDownload()
+                }}
+                disabled={exporting}
+                aria-busy={exporting}
+              >
+                {t('action.downloadXlsx')}
+              </button>
+              <input
+                ref={fileInput}
+                type="file"
+                accept="application/json,.json"
+                hidden
+                onChange={(event) => {
+                  const file = event.target.files?.[0]
+                  event.target.value = ''
+                  if (file) void handleOpenJson(file)
+                }}
+              />
+            </div>
           </div>
         </header>
+
+        {notice ? (
+          <div className={GUTTER}>
+            <div
+              className="flex items-baseline gap-[1ch] border-b border-ink py-[10px]"
+              role={notice.tone === 'error' ? 'alert' : 'status'}
+            >
+              {notice.tone === 'error' ? (
+                <span
+                  className="mark-in block h-[5px] w-[5px] shrink-0 bg-mark"
+                  aria-hidden="true"
+                />
+              ) : null}
+              <p className={`${HINT} ${notice.tone === 'error' ? 'font-bold' : ''}`}>
+                {notice.text}
+              </p>
+              <button
+                type="button"
+                className={`ghost ml-auto shrink-0 ${HINT} hover:font-bold`}
+                aria-label={t('action.dismissNotice')}
+                onClick={() => setNotice(null)}
+              >
+                {t('notice.dismiss')}
+              </button>
+            </div>
+          </div>
+        ) : null}
 
         <section className={`${GUTTER} py-[20px]`}>
           <input

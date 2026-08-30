@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated document exports landing in the repo root
+# (Chrome's download directory is set to this folder on this machine)
+/*.xlsx

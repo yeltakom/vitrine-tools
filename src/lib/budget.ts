@@ -69,6 +69,21 @@ export function isDeviating(row: BudgetRow): boolean {
   )
 }
 
+/**
+ * True when the page holds work a reload would destroy: a named document, or a
+ * ledger that is no longer the seeded template. Drives the leave warning — the
+ * budget lives in React state only, so a refresh is a shredder.
+ */
+export function hasUnsavedWork(doc: {
+  title: string
+  venue: string
+  rows: BudgetRow[]
+}): boolean {
+  if (doc.title.trim() !== '' || doc.venue.trim() !== '') return true
+  if (doc.rows.length !== exhibitionBudgetTemplate.length) return true
+  return doc.rows.some(isDeviating)
+}
+
 export function rowsInCategory(rows: BudgetRow[], categoryId: BudgetCategoryId): BudgetRow[] {
   return rows.filter((row) => row.categoryId === categoryId)
 }

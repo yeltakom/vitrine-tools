@@ -6,8 +6,8 @@ Work top to bottom. Tick boxes as you go. One task = one commit.
 
 ### Generator hardening
 - [x] Move generator into `/generator` route as a proper page (not a component demo)
-- [ ] Persist current budget in URL/localStorage-free state (React state + optional JSON import/export so users don't lose work)
-- [ ] Add "Import JSON / Export JSON" so users can save and reload budgets without accounts
+- [x] Persist current budget in URL/localStorage-free state (React state + optional JSON import/export so users don't lose work)
+- [x] Add "Import JSON / Export JSON" so users can save and reload budgets without accounts
 - [ ] Add PDF export alongside .xlsx (client-side, same data model)
 - [ ] Add 3 more template categories from `src/data/templates/`: Production, Communication/Press, Public Programme
 - [ ] Add a currency/format switch (EUR default; GBP, USD, TRY formatting only, no conversion)
