@@ -194,13 +194,11 @@ export const en = {
   'landing.pageDescription':
     'Exhibition planning documents for freelance curators and small institutions. Start from a priced budget template, change what differs, download an .xlsx. No account.',
   'landing.documentLabel': 'exhibition planning tools',
-  'landing.sampleTitle': 'Soft interiors',
-  'landing.sampleVenue': 'Kunstverein Leipzig',
 
   // The hero spread: what the curator said, and what it cost.
   'spread.briefLabel': 'The brief',
   'spread.brief':
-    'Six artists. Twenty-four works, eleven of them on loan. Three months at a Kunstverein in Leipzig, with projection and sound.',
+    'Six artists. Twenty-four works, eleven of them on loan. Ninety-six days at a non-collecting venue, with projection and sound.',
   'spread.budgetLabel': 'The budget it produced',
   'action.seeExample': 'See the whole thing',
 
