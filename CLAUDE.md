@@ -41,3 +41,8 @@ Anonymous brand — no personal names anywhere in code, copy, or metadata.
 A visitor lands on vitrine.tools, builds a budget in the free generator, hits the export limit or a premium template,
 pays via Lemon Squeezy checkout, receives a license key by email, unlocks the export. That loop, end to end, is Milestone 1.
 Everything not on that path is Milestone 2+.
+
+## Frontend skill (mandatory)
+Before any UI task, invoke /frontend-design:frontend-design. Follow its two-pass process:
+first write a design plan (tokens, type scale, layout, one signature element), critique it against
+"would a generic AI produce this?", revise, then build. Never skip the plan step.
