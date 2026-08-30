@@ -12,17 +12,20 @@ Work top to bottom. Tick boxes as you go. One task = one commit.
 - [ ] Add 3 more template categories from `src/data/templates/`: Production, Communication/Press, Public Programme
 - [ ] Add a currency/format switch (EUR default; GBP, USD, TRY formatting only, no conversion)
 
-### Free vs paid gate
-- [ ] Free tier: unlimited editing, .xlsx export watermarked "Made with vitrine.tools", max 25 line items
-- [ ] Paid tier (one-time license, EUR 29): no watermark, unlimited items, PDF export, all templates
-- [ ] License key input field in generator header; validate against Lemon Squeezy License API (client-side call to our own `/api/license/validate` route)
-- [ ] Create `/api/license/validate` route handler (server) that calls Lemon Squeezy, returns {valid, instance}
-- [ ] Store validated key in memory + `localStorage`-free cookie (httpOnly) so it survives reload
+### Free vs paid gate (4 tiers)
+- [ ] Free: unlimited editing, .xlsx export watermarked "Made with vitrine.tools", max 25 line items
+- [ ] SINGLE (€9): budget generator fully unlocked — no watermark, unlimited items, all template categories, .xlsx only (no PDF)
+- [ ] FULL (€29): everything in Single + PDF export + all current and future document types + updates
+- [ ] TEAM (€79): identical to Full, higher activation limit (team seats); no separate feature set
+- [ ] License key input in generator header; /api/license/validate returns {valid, tier, activationsUsed}; gate features by tier
+- [ ] Tier is derived from the Lemon Squeezy variant returned in the license validation response (variant_name/variant_id) — no database
+- [ ] Store validated key + tier in httpOnly cookie so it survives reload
 
 ### Lemon Squeezy
-- [ ] Create product "VITRINE.TOOLS License" in Lemon Squeezy dashboard (HUMAN TASK — Claude drafts copy, human clicks)
-- [ ] Add checkout overlay button ("Buy license — €29") using Lemon.js
-- [ ] Webhook route `/api/webhooks/lemonsqueezy` for `order_created` (log only for now; no DB)
+- [ ] Create ONE product "VITRINE.TOOLS License" with three variants: Single €9 (activation_limit 2), Full €29 (activation_limit 2), Team €79 (activation_limit 6) — HUMAN TASK: Claude drafts all copy, human clicks in dashboard
+- [ ] Checkout overlay via Lemon.js, one button per paid tier
+- [x] Pricing shown as one 4-column row (Free / 9 / 29 / 79), Full visually anchored as the default choice
+- [ ] Webhook /api/webhooks/lemonsqueezy for order_created (log only; no DB)
 
 ### Landing page (minimal, after paid loop works)
 - [x] Finish React migration of landing page — headline, the case for the tool, and the live

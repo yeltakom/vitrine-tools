@@ -37,6 +37,22 @@ Anonymous brand — no personal names anywhere in code, copy, or metadata.
 - Before adding a dependency, check if the platform already covers it.
 - If a task in ROADMAP.md is ambiguous, write your assumption in the PR/commit body and proceed — do not stall.
 
+## Pricing (4 tiers, one-time licenses — no subscription)
+| tier | price | what it unlocks |
+| --- | --- | --- |
+| Free | €0 | unlimited editing, max 25 line items, .xlsx watermarked "Made with vitrine.tools" |
+| Single | €9 | budget generator unlocked — no watermark, unlimited items, all budget template categories, .xlsx only |
+| Full | €29 | everything in Single + PDF export + every current and future document type + updates |
+| Team | €79 | identical features to Full, higher activation limit (6 instead of 2) |
+
+Full is the anchor and must stay visibly so. **PDF export and future document types are the
+Full-tier differentiator by design** — Single deliberately never gains them, because "the file
+formats and the document types still to come" is the only thing worth €20 more than Single.
+Team buys seats, never features.
+
+One Lemon Squeezy product, three paid variants. Tier is read from the variant returned by the
+license validation response — there is no database, so the license key is the only source of truth.
+
 ## Definition of "monetizable"
 A visitor lands on vitrine.tools, builds a budget in the free generator, hits the export limit or a premium template,
 pays via Lemon Squeezy checkout, receives a license key by email, unlocks the export. That loop, end to end, is Milestone 1.
