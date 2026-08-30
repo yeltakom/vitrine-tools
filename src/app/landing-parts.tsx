@@ -1,23 +1,67 @@
-import { GUTTER, HINT, LABEL } from './ledger-style'
+import { t } from '@/i18n'
+import { LABEL, LABEL_LIGHT, SHELL } from './ledger-style'
 
 /**
- * The page below the hero is built from one shape, borrowed from the budget it
- * is describing: a name on the left, a hairline, and the figure that settles it.
- * A section head, a document's status and a price are all the same object here,
- * which is why the marketing reads as part of the tool rather than about it.
+ * The site is installed rather than laid out. Rooms are full-bleed panels that
+ * alternate between paper and ink; each opens with a wall label — the small
+ * typed card an institution hangs beside a work — and, where a room needs it,
+ * wall text at the size a museum paints an introduction.
+ *
+ * Every part below takes its rules and borders from `currentColor`, so the same
+ * component is correct on paper and on a black panel without a second variant.
  */
-export function SectionRule({ label, id }: { label: string; id?: string }) {
+
+/** A room. `tone` decides whether it is hung on paper or on ink. */
+export function Room({
+  tone = 'paper',
+  id,
+  children,
+  className = '',
+}: {
+  tone?: 'paper' | 'ink'
+  id?: string
+  children: React.ReactNode
+  className?: string
+}) {
   return (
-    <div className={GUTTER} id={id}>
-      <div className="grid h-10 grid-cols-[auto_1fr] items-center gap-x-[1ch] sm:gap-x-[2ch]">
-        <h2 className={LABEL}>{label}</h2>
-        <span className="h-px bg-ink" aria-hidden="true" />
-      </div>
+    <section
+      id={id}
+      className={`${tone === 'ink' ? 'bg-ink text-paper' : 'bg-paper text-ink'} ${className}`}
+    >
+      <div className={SHELL}>{children}</div>
+    </section>
+  )
+}
+
+/** The label that opens a room: a name, a rule, and an optional status. */
+export function RoomLabel({ label, status }: { label: string; status?: string }) {
+  return (
+    <div className="flex items-center gap-[2ch] border-b border-current pb-[10px]">
+      <h2 className={LABEL}>{label}</h2>
+      <span className="h-px flex-1 bg-current" aria-hidden="true" />
+      {status ? <span className={LABEL_LIGHT}>{status}</span> : null}
     </div>
   )
 }
 
-/** A claim and the number that settles it. */
+/**
+ * The wall label. Maker, work and year, medium, dimensions, credit line —
+ * the five lines an institution types for every object it hangs, filled in
+ * with what is actually true about this one.
+ */
+export function WallLabel() {
+  return (
+    <div className="wall-label">
+      <p>{t('label.maker')}</p>
+      <p>{t('label.work')}</p>
+      <p>{t('label.medium')}</p>
+      <p>{t('label.dimensions')}</p>
+      <p>{t('label.credit')}</p>
+    </div>
+  )
+}
+
+/** A claim and the figure that settles it — the budget's grammar, page-sized. */
 export function LedgerRow({
   body,
   figure,
@@ -28,24 +72,9 @@ export function LedgerRow({
   strong?: boolean
 }) {
   return (
-    <div className={GUTTER}>
-      <div className="flex items-baseline justify-between gap-[2ch] border-t border-ink py-[14px]">
-        <p className="min-w-0">{body}</p>
-        <span className={`figure shrink-0 ${strong ? '' : 'font-normal'}`}>{figure}</span>
-      </div>
-    </div>
-  )
-}
-
-/** A hero line: label, rule, figure — the budget grammar at page scale. */
-export function HeroLine({ label, figure, mark }: { label: string; figure: string; mark?: boolean }) {
-  // Below sm the label wraps and would crush the connecting rule, so the rule
-  // only appears once there is room for it to mean something.
-  return (
-    <div className="flex items-baseline justify-between gap-[2ch] border-t border-ink py-[10px] sm:grid sm:h-10 sm:grid-cols-[auto_1fr_14ch] sm:items-center sm:gap-x-[2ch] sm:py-0">
-      <span className={LABEL}>{label}</span>
-      <span className="hidden h-px bg-ink sm:block" aria-hidden="true" />
-      <span className={`figure shrink-0 ${mark ? 'figure-total text-mark' : ''}`}>{figure}</span>
+    <div className="flex items-baseline justify-between gap-[3ch] border-b border-current py-[16px]">
+      <p className="min-w-0">{body}</p>
+      <span className={`figure shrink-0 ${strong ? '' : 'font-normal'}`}>{figure}</span>
     </div>
   )
 }
@@ -56,28 +85,18 @@ export function HeroLine({ label, figure, mark }: { label: string; figure: strin
  */
 export function Step({ label, body }: { label: string; body: string }) {
   return (
-    <li className={GUTTER}>
-      <div className="border-t border-ink py-[14px] sm:grid sm:grid-cols-[14ch_1fr] sm:gap-x-[2ch]">
-        <h3 className={`${LABEL} pt-[4px]`}>{label}</h3>
-        <p className="mt-[6px] min-w-0 sm:mt-0">{body}</p>
-      </div>
+    <li className="border-t border-current pt-[16px]">
+      <h3 className={LABEL}>{label}</h3>
+      <p className="mt-[12px]">{body}</p>
     </li>
   )
 }
 
 export function Question({ question, answer }: { question: string; answer: string }) {
   return (
-    <div className={GUTTER}>
-      <div className="border-t border-ink py-[14px]">
-        <h3 className="font-bold">{question}</h3>
-        <p className="mt-[4px]">{answer}</p>
-      </div>
+    <div className="border-b border-current py-[18px] md:grid md:grid-cols-[minmax(0,34ch)_minmax(0,1fr)] md:gap-[4ch]">
+      <h3 className="font-bold">{question}</h3>
+      <p className="mt-[6px] md:mt-0">{answer}</p>
     </div>
   )
 }
-
-export function Prose({ children }: { children: React.ReactNode }) {
-  return <div className={`${GUTTER} border-t border-ink py-[16px]`}>{children}</div>
-}
-
-export { GUTTER, HINT }

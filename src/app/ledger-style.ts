@@ -25,5 +25,10 @@ export const FIGURES = 'flex items-baseline gap-[1ch] sm:contents'
 export const CATEGORY_GRID =
   'grid h-10 items-center grid-cols-[auto_1fr_10ch] gap-x-[1ch] sm:grid-cols-[auto_1fr_14ch] sm:gap-x-[2ch]'
 
-/** The bordered control that names its own result. Reversed on hover. */
-export const BUTTON = `border border-ink px-[1.5ch] py-[6px] ${LABEL}`
+/** The bordered control that names its own result. Takes its border from the
+ *  ink it is sitting in, so the same token works on paper and on a black panel. */
+export const BUTTON = `border border-current px-[1.5ch] py-[8px] ${LABEL}`
+
+/** Full-bleed sections share one measure; the budget document keeps its own. */
+export const SHELL = 'mx-auto w-full max-w-[1120px] px-[20px] sm:px-[40px]'
+export const DOC = 'mx-auto w-full max-w-[78ch]'

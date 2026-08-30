@@ -70,7 +70,7 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 
@@ -115,18 +115,54 @@ a.ghost {
   font-variant-numeric: tabular-nums;
 }
 
-/* The one loud rung. Mono at this size sets its own rhythm, so the tracking is
-   pulled in and the leading pushed down until the block reads as a mass rather
-   than as three separate lines. Used once per page, in the hero. */
 .display {
-  font-size: clamp(28px, 5.6vw, 46px);
+  font-size: clamp(26px, 4.4vw, 38px);
   font-weight: 800;
   letter-spacing: -0.03em;
-  line-height: 1.08;
+  line-height: 1.1;
+}
+
+/* The title wall. One per page. Mono at this size is a wall rather than a
+   sentence, so the tracking is pulled hard and the leading dropped under 1 to
+   lock the lines into a single mass. */
+.hero-type {
+  font-size: clamp(36px, 8.6vw, 100px);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+/* The typed card beside a work: maker, title and year, medium, dimensions,
+   credit line. It carries facts at the size those cards are actually set. */
+.wall-label {
+  border: 1px solid currentColor;
+  padding: 14px 16px;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.wall-label > :first-child {
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Wall text: the paragraph painted at the entrance of a room, set larger than
+   the catalogue it summarises. */
+.wall-text {
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .wall-text {
+    font-size: 21px;
+  }
 }
 
 /* One rung between the display and the body, so the opening paragraph is not
-   asked to carry a 46px headline at caption weight. */
+   asked to carry a title wall at caption weight. */
 .lede {
   font-size: 15px;
   line-height: 1.65;
@@ -134,8 +170,18 @@ a.ghost {
 
 @media (min-width: 640px) {
   .lede {
-    font-size: 17px;
+    font-size: 18px;
   }
+}
+
+/* A price is the largest number on its panel, and the only place a figure is
+   allowed to outgrow a total. */
+.figure-price {
+  font-size: clamp(38px, 7vw, 62px);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 /* The single large number on the page. */

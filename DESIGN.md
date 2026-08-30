@@ -5,61 +5,70 @@ constraints leave open, so later passes do not re-litigate them.
 
 ## Tokens
 Three inks, no fourth. `--color-ink #000000`, `--color-paper #FFFFFF`, `--color-mark #E30613`.
-Red is spent on exactly two things: the total figure and the deviation mark. Nothing else
-turns red — not links, not hovers, not errors' text.
+
+They are used as **areas**, not only as lines. A black panel is still two colours and no
+gradient; inversion is where the drama comes from in a palette this small. Red is spent
+exactly twice on the landing page: the total the generator calculates, and the one pricing
+tier the wall is hung around. Nowhere else — not on links, not on hovers, not on errors.
 
 ## Type scale
-One family (JetBrains Mono). Rank is carried by scale and weight alone.
+One family (JetBrains Mono). Rank is carried by scale and weight alone, so the jumps have
+to be large enough to read as decisions.
 
 | rung | size / weight | job |
 | --- | --- | --- |
-| 11 / 700 uppercase 0.16em | structural label — category, section head |
-| 11 / 400 uppercase 0.16em | document label — what this page is |
-| 11 / 400 | hint, caption, unit |
-| 13–14 / 500 | body and ledger lines |
-| 20 / 700 | the document's own name (outranks its lines) |
-| 28 / 800 | the one figure that settles the page |
+| `.hero-type` | clamp(36–100px) / 800, −0.055em, 0.94 uppercase | the title wall. One per site. |
+| `.figure-price` | clamp(38–62px) / 800, −0.04em | a price. The only figure allowed to outgrow a total |
+| `.display` | clamp(26–38px) / 800 | a legal page's title |
+| `.wall-text` | 17→21px / 400 | the paragraph painted at the entrance of a room |
+| `.lede` | 15→18px / 400 | the opening paragraph under the title wall |
+| body | 13–14px / 400–500 | prose and ledger lines |
+| `LABEL` | 11px / 700 uppercase 0.16em | room labels, tier names, categories |
+| `.wall-label` | 11px / 400, 1.8 | the typed card beside a work |
 
 De-emphasis is never a lighter ink. A hint is small, not grey.
 
 ## Layout
-A single 78ch column on every page, gutter `2ch` (`3ch` at sm). The character grid is the
-measure: columns are `1fr 6ch 12ch 14ch`, so figures land under figures without a table.
-Below `sm` the line stacks over its figures rather than shrinking the grid.
+Two measures, and the difference between them means something.
 
-Structure is one device: a 1px black hairline between a name and the figure it settles.
-It is the same device for a category and its subtotal, for the masthead and its actions,
-and for a section head and its number.
+- **Rooms** (`SHELL`, max 1120px) — the site. Full-bleed panels that alternate paper and ink.
+- **The document** (`DOC`, 78ch) — the budget. It keeps the narrow measure because it is a
+  document, and it is framed inside its room so you can see that it is an object on display.
+
+Structure is one device: a 1px rule in `currentColor` between a name and the figure it
+settles. It is the same device for a category and its subtotal, a room and its status, a
+document type and whether it is built yet.
 
 ## Signature
-**Every section is a budget line.** A section head, a document's build status, a price and
-the hero's own promise are all the same object: a name on the left, a hairline, and the figure
-that settles it. The marketing reads as part of the ledger rather than as writing about it.
+**The site is installed, not laid out.** It is hung the way the audience hangs a show.
 
-The hero states the business — this is a startup site, not a bare calculator — and is
-answered immediately by two ledger lines pricing the reader's next step: `10 min` and `0,00`,
-the second set in the same red the tool sets a total in.
+- A **title wall** in ink opens it: the headline set as a wall, uppercase, leading under 1.
+- Beside it hangs the **wall label** — the five-line typed card an institution puts next to
+  every object: maker, work and year, medium, dimensions, credit line. Filled in with what is
+  true here, including the dimensions: `78 characters × unlimited lines`, which is the actual
+  measure of the document the tool produces.
+- Each room after it opens with its own label, and where a room needs an introduction it gets
+  **wall text**, set larger than the catalogue prose beneath it.
+- The generator is the **object on display**: framed, labelled `THE GENERATOR / LIVE`, and
+  live — you type into the thing itself, and what you type is in the file you download.
+- Pricing is **four works on one wall**, divided by hairlines, with Full filled in red because
+  it is the only tier carrying PDF and every document type still to come.
 
-Halfway down, under "Try it", the **real generator** is embedded. Not a screenshot, not a
-read-only copy: the same component `/generator` runs, seeded with a sample show. Whatever a
-visitor types there is in the file they download. Because that ledger is live, every editable
-cell carries its 1px rule **at rest** rather than on hover — a budget whose fields appear only
-under the pointer reads as a print-out, which is the one thing this page must not be.
-
-The brief asked the page to open on a working table rather than a headline. The owner
-overruled that: the site has to explain the business first. What the brief keeps is the
-grammar above, which is why the page still could not be mistaken for a generic SaaS landing.
+Because the displayed ledger is live, every editable cell carries its 1px rule **at rest**
+rather than on hover. A budget whose fields appear only under the pointer reads as a
+print-out, which is the one thing this page must not be.
 
 ## Critique — would a generic AI produce this?
-A generic pass produces: headline hero + subhead + CTA, three feature cards with icons, a
-pricing card with a checkmark list, an FAQ accordion. Every one of those is refused here.
-The broadsheet-with-hairlines look is itself a common AI default, but the brief mandates it
-explicitly, so it stands.
+A generic pass produces: a centred hero with a gradient, three feature cards with icons, a
+pricing table with checkmark columns and a "most popular" ribbon, an FAQ accordion. Every one
+of those is refused here — the ribbon becomes a red fill, the cards become panels divided by
+rules, the accordion becomes flat rows.
 
-Two things were revised after the first pass:
-- "What you get" was label-left / prose-right, which reads as feature copy. It is now
-  prose-left / **figure**-right, so the rows carry information and join the ledger.
-- The FAQ was an accordion. It is now flat rows: no motion that does not explain something.
+Two earlier passes were thrown away for being generic in the other direction: a page that was
+nothing but 78ch of hairline-ruled small type, which is the broadsheet default, and a hero
+that was a read-only screenshot of the product. The brief's "open on a working table, not a
+headline" was overruled by the owner — the site has to state the business — but the ledger
+grammar it protects survives in every room.
 
 ## Motion
 One animation exists: `mark-in`, 120ms linear opacity, when a deviation mark appears.

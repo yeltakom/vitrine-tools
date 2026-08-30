@@ -1,140 +1,144 @@
 import { exhibitionBudgetTemplate } from '@/data/templates/exhibition-budget'
 import { t } from '@/i18n'
 import BudgetLedger from './budget-ledger'
-import { HeroLine, LedgerRow, Prose, Question, SectionRule, Step } from './landing-parts'
-import { BUTTON, GUTTER, HINT, LABEL } from './ledger-style'
-import PageShell from './page-shell'
+import { LedgerRow, Question, Room, RoomLabel, Step, WallLabel } from './landing-parts'
+import { BUTTON, DOC, HINT, LABEL_LIGHT, WORDMARK } from './ledger-style'
+import PricingWall from './pricing-wall'
+import SiteFooter from './site-footer'
 
 /**
- * The site, not the tool. It has to say what the file is, why the one people
- * inherit is broken, and what replaces it — and then let a visitor prove it by
- * editing a real budget halfway down the page rather than reading a claim
- * about one.
+ * The site, installed.
  *
- * The brief asks the page to open on a working table rather than a headline;
- * that was overruled by the owner, who needs the business explained. What is
- * kept from the brief is the grammar: every section head, status and price is
- * a name, a hairline and the figure that settles it.
+ * The brief asks the page to open on a working budget rather than a headline;
+ * the owner overruled that, because a visitor met a spreadsheet and had to
+ * infer a company from it. What replaces it is not a generic SaaS hero: the
+ * page is hung like a show. A title wall in ink, a wall label beside it giving
+ * the work's medium and dimensions, then rooms that alternate paper and ink.
+ * The generator is the object on display, framed and live, halfway through.
+ *
+ * The accent is spent exactly twice: the total the generator calculates, and
+ * the one pricing tier the wall is hung around.
  */
 export default function Home() {
   return (
-    <PageShell
-      documentLabel={t('landing.documentLabel')}
-      wordmarkAsLink={false}
-      footerAction={{ href: '/generator', label: t('action.openGenerator') }}
-    >
-      <section className={`${GUTTER} pb-[28px] pt-[36px]`}>
-        <h1 className="display">{t('hero.headline')}</h1>
-        <p className="lede mt-[20px]">{t('hero.lede')}</p>
-        <div className="mt-[24px] flex flex-wrap items-center gap-x-[3ch] gap-y-[12px]">
-          <a className={`ghost ${BUTTON} hover:bg-ink hover:text-paper`} href="#try">
-            {t('action.buildBudget')}
-          </a>
-          <a className={`link ${HINT}`} href="#pricing">
-            {t('action.seePricing')}
-          </a>
+    <main>
+      {/* Title wall. */}
+      <Room tone="ink">
+        <header className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[4px] border-b border-current py-[16px]">
+          <span className={WORDMARK}>{t('app.wordmark')}</span>
+          <span className={LABEL_LIGHT}>{t('landing.documentLabel')}</span>
+        </header>
+
+        <h1 className="hero-type mt-[44px] sm:mt-[72px]">{t('hero.headline')}</h1>
+
+        <div className="mt-[40px] grid gap-[28px] pb-[56px] md:grid-cols-[minmax(0,32ch)_minmax(0,1fr)] md:gap-[48px] md:pb-[80px]">
+          <WallLabel />
+          <div>
+            <p className="lede">{t('hero.lede')}</p>
+            <div className="mt-[28px] flex flex-wrap items-center gap-x-[3ch] gap-y-[14px]">
+              <a className={`ghost ${BUTTON} hover:bg-paper hover:text-ink`} href="#try">
+                {t('action.buildBudget')}
+              </a>
+              <a className="link" href="#pricing">
+                {t('action.seePricing')}
+              </a>
+            </div>
+          </div>
         </div>
-      </section>
+      </Room>
 
-      {/* The hero's evidence is a two-line budget of the reader's next ten
-          minutes, priced in the same red the tool prices a total in. */}
-      <div className={`${GUTTER} pb-[8px]`}>
-        <HeroLine label={t('hero.timeLabel')} figure={t('hero.timeFigure')} />
-        <HeroLine label={t('hero.costLabel')} figure={t('hero.costFigure')} mark />
-      </div>
+      {/* Wall text at the entrance: what the file is and why it fails. */}
+      <Room className="pt-[48px] sm:pt-[72px]">
+        <RoomLabel label={t('section.why')} />
+        <div className="grid gap-[20px] py-[28px] md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:gap-[48px]">
+          <p className="wall-text">{t('why.body1')}</p>
+          <div>
+            <p>{t('why.body2')}</p>
+            <p className="mt-[14px] font-bold">{t('why.body3')}</p>
+          </div>
+        </div>
+      </Room>
 
-      <section className="pt-[32px]">
-        <SectionRule label={t('section.why')} />
-        <Prose>
-          <p>{t('why.body1')}</p>
-          <p className="mt-[12px]">{t('why.body2')}</p>
-        </Prose>
-      </section>
-
-      <section className="pt-[32px]">
-        <SectionRule label={t('section.how')} />
-        <ol>
+      <Room className="pt-[32px]">
+        <RoomLabel label={t('section.how')} />
+        <ol className="grid gap-[24px] py-[28px] md:grid-cols-3 md:gap-[32px]">
           <Step label={t('how.startLabel')} body={t('how.startBody')} />
           <Step label={t('how.changeLabel')} body={t('how.changeBody')} />
           <Step label={t('how.downloadLabel')} body={t('how.downloadBody')} />
         </ol>
-      </section>
+      </Room>
 
-      {/* The proof. Not a screenshot of the generator — the generator. */}
-      <section className="pt-[32px]">
-        <SectionRule label={t('section.try')} id="try" />
-        <div className={`${GUTTER} border-t border-ink pt-[14px]`}>
-          <p className={HINT}>{t('try.note')}</p>
+      {/* The object on display. Framed, labelled, and live. */}
+      <Room id="try" className="pt-[32px] pb-[56px] sm:pb-[80px]">
+        <RoomLabel label={t('section.try')} status={t('try.status')} />
+        <p className="max-w-[68ch] py-[18px]">{t('try.note')}</p>
+        <div className="border border-ink">
+          <div className={DOC}>
+            <BudgetLedger
+              masthead={false}
+              initialTitle={t('landing.sampleTitle')}
+              initialVenue={t('landing.sampleVenue')}
+            />
+          </div>
         </div>
-        <BudgetLedger
-          masthead={false}
-          initialTitle={t('landing.sampleTitle')}
-          initialVenue={t('landing.sampleVenue')}
-        />
-      </section>
+      </Room>
 
-      <section className="pt-[32px]">
-        <SectionRule label={t('landing.whatYouGet')} />
-        <LedgerRow body={t('landing.get1')} figure={String(exhibitionBudgetTemplate.length)} strong />
-        <LedgerRow body={t('landing.get2')} figure={t('landing.get2Figure')} strong />
-        <LedgerRow body={t('landing.get3')} figure={t('landing.get3Figure')} strong />
-      </section>
-
-      <section className="pt-[32px]">
-        <SectionRule label={t('section.documents')} />
-        <div className={`${GUTTER} border-t border-ink pt-[14px]`}>
-          <p className={HINT}>{t('documents.note')}</p>
-        </div>
+      {/* The catalogue: what exists, what is being built, who it is for. */}
+      <Room tone="ink" className="py-[48px] sm:py-[72px]">
+        <RoomLabel label={t('section.documents')} />
+        <p className="py-[16px]">{t('documents.note')}</p>
         <LedgerRow body={t('documents.budget')} figure={t('status.ready')} strong />
         <LedgerRow body={t('documents.production')} figure={t('status.next')} />
         <LedgerRow body={t('documents.press')} figure={t('status.next')} />
         <LedgerRow body={t('documents.programme')} figure={t('status.next')} />
         <LedgerRow body={t('documents.timeline')} figure={t('status.later')} />
-      </section>
 
-      <section className="pt-[32px]">
-        <SectionRule label={t('section.who')} />
-        <ul>
-          {[t('who.1'), t('who.2'), t('who.3')].map((line) => (
-            <li key={line} className={GUTTER}>
-              <p className="border-t border-ink py-[14px]">{line}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Two rows in the same ledger: what you pay today, what the license costs.
-          No cards, no checkmark columns — the figures do the comparing. */}
-      <section className="pt-[32px]">
-        <SectionRule label={t('section.pricing')} id="pricing" />
-        <div className={GUTTER}>
-          <div className="border-t border-ink py-[16px] sm:grid sm:grid-cols-[14ch_1fr_14ch] sm:gap-x-[2ch]">
-            <h3 className={`${LABEL} pt-[4px]`}>{t('pricing.freeLabel')}</h3>
-            <p className="mt-[6px] min-w-0 sm:mt-0">{t('pricing.freeBody')}</p>
-            <span className="figure mt-[6px] block sm:mt-0">{t('pricing.freeFigure')}</span>
-          </div>
-          <div className="border-t border-ink py-[16px] sm:grid sm:grid-cols-[14ch_1fr_14ch] sm:gap-x-[2ch]">
-            <h3 className={`${LABEL} pt-[4px]`}>{t('pricing.licenceLabel')}</h3>
-            <p className="mt-[6px] min-w-0 sm:mt-0">{t('pricing.licenceBody')}</p>
-            <span className="figure figure-total mt-[6px] block text-[28px] leading-[1.1] text-mark sm:mt-0">
-              {t('landing.priceFigure')}
-            </span>
-          </div>
-          <p className={`mt-[14px] ${HINT}`}>{t('landing.priceNote')}</p>
-          <button type="button" className={`ghost mt-[16px] ${BUTTON} cursor-not-allowed`} disabled>
-            {t('action.buyLicense')}
-          </button>
+        <div className="mt-[48px]">
+          <RoomLabel label={t('section.who')} />
+          <ul className="pt-[4px]">
+            {[t('who.1'), t('who.2'), t('who.3')].map((line) => (
+              <li key={line} className="border-b border-current py-[16px]">
+                {line}
+              </li>
+            ))}
+          </ul>
         </div>
-      </section>
 
-      <section className="pt-[32px]">
-        <SectionRule label={t('landing.questions')} />
-        <Question question={t('faq.q1')} answer={t('faq.a1')} />
-        <Question question={t('faq.q2')} answer={t('faq.a2')} />
-        <Question question={t('faq.q3')} answer={t('faq.a3')} />
-        <Question question={t('faq.q4')} answer={t('faq.a4')} />
-        <Question question={t('faq.q5')} answer={t('faq.a5')} />
-      </section>
-    </PageShell>
+        <div className="mt-[48px]">
+          <RoomLabel label={t('landing.whatYouGet')} />
+          <LedgerRow
+            body={t('landing.get1')}
+            figure={String(exhibitionBudgetTemplate.length)}
+            strong
+          />
+          <LedgerRow body={t('landing.get2')} figure={t('landing.get2Figure')} strong />
+          <LedgerRow body={t('landing.get3')} figure={t('landing.get3Figure')} strong />
+        </div>
+      </Room>
+
+      {/* Four works on one wall. */}
+      <Room tone="ink" id="pricing" className="pb-[56px] sm:pb-[80px]">
+        <RoomLabel label={t('section.pricing')} />
+        <div className="pt-[24px]">
+          <PricingWall />
+        </div>
+        <p className={`max-w-[76ch] pt-[20px] ${HINT}`}>{t('pricing.note')}</p>
+      </Room>
+
+      <Room className="py-[48px] sm:py-[72px]">
+        <RoomLabel label={t('landing.questions')} />
+        <div className="pt-[4px]">
+          <Question question={t('faq.q1')} answer={t('faq.a1')} />
+          <Question question={t('faq.q2')} answer={t('faq.a2')} />
+          <Question question={t('faq.q3')} answer={t('faq.a3')} />
+          <Question question={t('faq.q4')} answer={t('faq.a4')} />
+          <Question question={t('faq.q5')} answer={t('faq.a5')} />
+        </div>
+      </Room>
+
+      <Room tone="ink">
+        <SiteFooter action={{ href: '/generator', label: t('action.openGenerator') }} />
+      </Room>
+    </main>
   )
 }

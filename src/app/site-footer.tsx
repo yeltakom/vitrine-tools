@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { t } from '@/i18n'
-import { GUTTER, HINT } from './ledger-style'
+import { HINT } from './ledger-style'
 
 /**
  * The legal links have to be reachable from every page (Germany), so the footer
@@ -13,8 +13,8 @@ export default function SiteFooter({
   action?: { href: string; label: string }
 }) {
   return (
-    <footer className={`${GUTTER} pb-[40px] pt-[32px]`}>
-      <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[8px] border-t border-ink pt-[16px]">
+    <footer className="pb-[36px] pt-[28px]">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[8px] border-t border-current pt-[16px]">
         <span className={`flex flex-wrap items-baseline gap-x-[2ch] gap-y-[4px] ${HINT}`}>
           <Link className="link" href="/impressum">
             {t('footer.impressum')}
