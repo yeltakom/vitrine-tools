@@ -1,5 +1,5 @@
 import { t } from '@/i18n'
-import { GUTTER, HINT, LABEL } from './ledger-style'
+
 import PageShell from './page-shell'
 
 export interface LegalEntry {
@@ -30,24 +30,24 @@ export default function LegalShell({
       documentLabel={t('legal.documentLabel')}
       footerAction={{ href: '/generator', label: t('action.openGenerator') }}
     >
-      <div className={GUTTER}>
+      <div className="">
         <p
-          className={`flex items-baseline gap-[1ch] border-b border-ink py-[10px] font-bold ${HINT}`}
+          className={`flex items-baseline gap-[1ch] border-b border-ink py-[10px] font-bold note`}
         >
           <span className="block h-[5px] w-[5px] shrink-0 bg-mark" aria-hidden="true" />
           {t('legal.draftNotice')}
         </p>
       </div>
 
-      <section className={`${GUTTER} py-[24px]`}>
+      <section className={`py-[24px]`}>
         <h1 className="cell-title">{title}</h1>
-        <p className={`mt-[8px] ${HINT}`}>{intro}</p>
+        <p className={`mt-[8px] note`}>{intro}</p>
       </section>
 
-      <div className={GUTTER}>
+      <div className="">
         {entries.map((entry) => (
           <div key={entry.label} className="border-t border-ink py-[16px]">
-            <h2 className={LABEL}>{entry.label}</h2>
+            <h2 className="label muted">{entry.label}</h2>
             <p className="mt-[8px]">{entry.body}</p>
           </div>
         ))}

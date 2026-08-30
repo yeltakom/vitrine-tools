@@ -15,7 +15,7 @@ import {
   type ExhibitionBrief,
   type VenueType,
 } from '@/lib/brief'
-import { GUTTER, HINT, LABEL } from '../ledger-style'
+import { LABEL } from '../ledger-style'
 
 /**
  * The brief. This is the product's front door: a curator describes a show once
@@ -37,10 +37,10 @@ function Field({
   children: React.ReactNode
 }) {
   return (
-    <label className="block border-t border-ink pt-[10px]">
+    <label className="block border-t border-rule pt-[10px]">
       <span className={`block ${LABEL}`}>{label}</span>
       {children}
-      {hint ? <span className={`mt-[4px] block ${HINT}`}>{hint}</span> : null}
+      {hint ? <span className={`mt-[4px] block note`}>{hint}</span> : null}
     </label>
   )
 }
@@ -68,7 +68,7 @@ function Chips<T extends string>({
             onChange={() => onToggle(option)}
           />
           <span
-            className={`block border border-ink px-[1ch] py-[5px] text-[11px] peer-checked:bg-ink peer-checked:text-paper peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-current`}
+            className="block border border-rule px-[10px] py-[6px] text-[13px] peer-checked:border-ink peer-checked:bg-ink peer-checked:text-paper peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-current" 
           >
             {t(labels[option])}
           </span>
@@ -96,7 +96,7 @@ function NumberField({
   return (
     <Field label={label} hint={hint}>
       <input
-        className="cell mt-[4px] text-[16px] font-medium"
+        className="cell mt-[6px]"
         type="number"
         inputMode="numeric"
         min={min}
@@ -139,20 +139,20 @@ export default function BriefForm({
 
   return (
     <form
-      className={GUTTER}
+      
       onSubmit={(event) => {
         event.preventDefault()
         onGenerate(brief)
       }}
     >
-      <p className={`py-[16px] ${HINT}`}>{t('brief.intro')}</p>
+      <p className="max-w-[62ch] py-[28px] lede">{t('brief.intro')}</p>
 
-      <fieldset className="pb-[24px]">
-        <legend className={`pb-[8px] ${LABEL}`}>{t('brief.sectionShow')}</legend>
+      <fieldset className="pb-[40px]">
+        <legend className={`pb-[10px] pt-[24px] ${LABEL}`}>{t('brief.sectionShow')}</legend>
 
         <Field label={t('brief.title')}>
           <input
-            className="cell cell-title mt-[4px]"
+            className="cell cell-title mt-[6px]"
             value={brief.title}
             autoComplete="off"
             placeholder={t('field.titlePlaceholder')}
@@ -160,10 +160,10 @@ export default function BriefForm({
           />
         </Field>
 
-        <div className="mt-[16px] grid gap-[16px] sm:grid-cols-2">
+        <div className="mt-[24px] grid gap-[24px] sm:grid-cols-2">
           <Field label={t('brief.venue')}>
             <input
-              className="cell mt-[4px] text-[16px] font-medium"
+              className="cell mt-[6px]"
               value={brief.venue}
               autoComplete="off"
               placeholder={t('field.venuePlaceholder')}
@@ -172,7 +172,7 @@ export default function BriefForm({
           </Field>
           <Field label={t('brief.city')} hint={t('brief.cityHint')}>
             <input
-              className="cell mt-[4px] text-[16px] font-medium"
+              className="cell mt-[6px]"
               value={brief.city}
               autoComplete="off"
               placeholder={t('brief.cityPlaceholder')}
@@ -181,10 +181,10 @@ export default function BriefForm({
           </Field>
         </div>
 
-        <div className="mt-[16px] grid gap-[16px] sm:grid-cols-3">
+        <div className="mt-[24px] grid gap-[24px] sm:grid-cols-3">
           <Field label={t('brief.venueType')} hint={t('brief.venueTypeHint')}>
             <select
-              className="cell mt-[4px] text-[16px] font-medium"
+              className="cell mt-[6px]"
               value={brief.venueType}
               onChange={(event) => set('venueType', event.target.value as VenueType)}
             >
@@ -197,7 +197,7 @@ export default function BriefForm({
           </Field>
           <Field label={t('brief.opening')}>
             <input
-              className="cell mt-[4px] text-[16px] font-medium"
+              className="cell mt-[6px]"
               type="date"
               value={brief.opening}
               onChange={(event) => set('opening', event.target.value)}
@@ -205,7 +205,7 @@ export default function BriefForm({
           </Field>
           <Field label={t('brief.closing')} hint={t('brief.datesHint')}>
             <input
-              className="cell mt-[4px] text-[16px] font-medium"
+              className="cell mt-[6px]"
               type="date"
               value={brief.closing}
               onChange={(event) => set('closing', event.target.value)}
@@ -214,10 +214,10 @@ export default function BriefForm({
         </div>
       </fieldset>
 
-      <fieldset className="pb-[24px]">
-        <legend className={`pb-[8px] ${LABEL}`}>{t('brief.sectionWorks')}</legend>
+      <fieldset className="pb-[40px]">
+        <legend className={`pb-[10px] pt-[24px] ${LABEL}`}>{t('brief.sectionWorks')}</legend>
 
-        <div className="grid gap-[16px] sm:grid-cols-3">
+        <div className="grid gap-[24px] sm:grid-cols-3">
           <NumberField
             label={t('brief.artists')}
             hint={t('brief.artistsHint')}
@@ -244,7 +244,7 @@ export default function BriefForm({
           />
         </div>
 
-        <div className="mt-[16px] border-t border-ink pt-[10px]">
+        <div className="mt-[24px] border-t border-rule pt-[10px]">
           <span className={`block ${LABEL}`}>{t('brief.artworkTypes')}</span>
           <Chips
             options={artworkTypes}
@@ -252,14 +252,14 @@ export default function BriefForm({
             selected={brief.artworkTypes}
             onToggle={(value: ArtworkType) => toggle('artworkTypes', value)}
           />
-          <span className={`mt-[8px] block ${HINT}`}>{t('brief.artworkTypesHint')}</span>
+          <span className={`mt-[8px] block note`}>{t('brief.artworkTypesHint')}</span>
         </div>
       </fieldset>
 
-      <fieldset className="pb-[24px]">
-        <legend className={`pb-[8px] ${LABEL}`}>{t('brief.sectionInstall')}</legend>
+      <fieldset className="pb-[40px]">
+        <legend className={`pb-[10px] pt-[24px] ${LABEL}`}>{t('brief.sectionInstall')}</legend>
 
-        <div className="grid gap-[16px] sm:grid-cols-2">
+        <div className="grid gap-[24px] sm:grid-cols-2">
           <NumberField
             label={t('brief.crew')}
             hint={t('brief.crewHint')}
@@ -270,7 +270,7 @@ export default function BriefForm({
           />
           <Field label={t('brief.targetBudget')} hint={t('brief.targetBudgetHint')}>
             <input
-              className="cell mt-[4px] text-[16px] font-medium"
+              className="cell mt-[6px]"
               type="number"
               inputMode="numeric"
               min={0}
@@ -285,7 +285,7 @@ export default function BriefForm({
           </Field>
         </div>
 
-        <div className="mt-[16px] border-t border-ink pt-[10px]">
+        <div className="mt-[24px] border-t border-rule pt-[10px]">
           <span className={`block ${LABEL}`}>{t('brief.avNeeds')}</span>
           <Chips
             options={avNeeds}
@@ -293,18 +293,15 @@ export default function BriefForm({
             selected={brief.avNeeds}
             onToggle={(value: AvNeed) => toggle('avNeeds', value)}
           />
-          <span className={`mt-[8px] block ${HINT}`}>{t('brief.avNeedsHint')}</span>
+          <span className={`mt-[8px] block note`}>{t('brief.avNeedsHint')}</span>
         </div>
       </fieldset>
 
-      <div className="flex flex-wrap items-center gap-x-[3ch] gap-y-[12px] border-t border-ink py-[20px]">
-        <button
-          type="submit"
-          className={`ghost border border-current px-[2ch] py-[10px] ${LABEL} hover:bg-ink hover:text-paper`}
-        >
+      <div className="flex flex-wrap items-center gap-x-[20px] gap-y-[12px] border-t border-rule py-[28px]">
+        <button type="submit" className="ghost btn">
           {t('action.generateBudget')}
         </button>
-        <span className={HINT}>{t('brief.generateHint')}</span>
+        <span className={'note'}>{t('brief.generateHint')}</span>
       </div>
     </form>
   )

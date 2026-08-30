@@ -1,34 +1,23 @@
 import Link from 'next/link'
 import { t } from '@/i18n'
-import { HINT } from './ledger-style'
 
-/**
- * The legal links have to be reachable from every page (Germany), so the footer
- * is shared rather than owned by the landing page. It keeps the ledger grammar:
- * names on the left, the thing that settles the page on the right.
- */
-export default function SiteFooter({
-  action,
-}: {
-  action?: { href: string; label: string }
-}) {
+/** The colophon. Legal links have to be reachable from every page (Germany). */
+export default function SiteFooter({ action }: { action?: { href: string; label: string } }) {
   return (
-    <footer className="pb-[36px] pt-[28px]">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[8px] border-t border-current pt-[16px]">
-        <span className={`flex flex-wrap items-baseline gap-x-[2ch] gap-y-[4px] ${HINT}`}>
-          <Link className="link" href="/impressum">
-            {t('footer.impressum')}
-          </Link>
-          <Link className="link" href="/privacy">
-            {t('footer.privacy')}
-          </Link>
-        </span>
-        {action ? (
-          <Link className={`link ml-auto ${HINT}`} href={action.href}>
-            {action.label}
-          </Link>
-        ) : null}
-      </div>
+    <footer className="mt-[80px] flex flex-wrap items-baseline justify-between gap-x-[20px] gap-y-[8px] border-t border-rule py-[24px] note">
+      <span className="flex flex-wrap items-baseline gap-x-[20px] gap-y-[4px]">
+        <Link className="link" href="/impressum">
+          {t('footer.impressum')}
+        </Link>
+        <Link className="link" href="/privacy">
+          {t('footer.privacy')}
+        </Link>
+      </span>
+      {action ? (
+        <Link className="link ml-auto" href={action.href}>
+          {action.label}
+        </Link>
+      ) : null}
     </footer>
   )
 }

@@ -1,13 +1,12 @@
 import Link from 'next/link'
 import { t } from '@/i18n'
-import { GUTTER, LABEL_LIGHT, WORDMARK } from './ledger-style'
+import { SHELL } from './ledger-style'
 import SiteFooter from './site-footer'
 
 /**
- * Every page is the same object: one 78ch column of paper with a masthead at the
- * top and the legal links at the bottom. The column is the identity — widening
- * it for the marketing sections would make them a different document from the
- * budget they are describing.
+ * One sheet of paper with a running head at the top and a colophon at the foot.
+ * The masthead is deliberately small: on a page of printed matter the running
+ * head is the quietest thing on the spread, not the loudest.
  */
 export default function PageShell({
   heading,
@@ -23,22 +22,22 @@ export default function PageShell({
   footerAction?: { href: string; label: string }
   children: React.ReactNode
 }) {
+  const wordmark = <span className="text-[15px] font-semibold tracking-[-0.01em]">{t('app.wordmark')}</span>
+
   return (
-    <main className="min-h-screen bg-paper text-ink text-[13px] leading-[1.6] sm:text-[14px]">
-      <div className="mx-auto max-w-[78ch]">
+    <main className="min-h-screen">
+      <div className={SHELL}>
         {heading ? <h1 className="sr-only">{heading}</h1> : null}
 
-        <header className={GUTTER}>
-          <div className="flex flex-wrap items-baseline justify-between gap-x-[2ch] gap-y-[2px] border-b border-ink pb-[12px] pt-[16px]">
-            {wordmarkAsLink ? (
-              <Link className={`ghost ${WORDMARK} underline-offset-[3px] hover:underline`} href="/">
-                {t('app.wordmark')}
-              </Link>
-            ) : (
-              <span className={WORDMARK}>{t('app.wordmark')}</span>
-            )}
-            <span className={LABEL_LIGHT}>{documentLabel}</span>
-          </div>
+        <header className="flex flex-wrap items-baseline justify-between gap-x-[20px] gap-y-[4px] border-b border-rule py-[20px]">
+          {wordmarkAsLink ? (
+            <Link className="ghost no-underline" href="/">
+              {wordmark}
+            </Link>
+          ) : (
+            wordmark
+          )}
+          <span className="label muted">{documentLabel}</span>
         </header>
 
         {children}

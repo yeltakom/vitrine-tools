@@ -30,13 +30,26 @@ budget, never to build one from nothing.
 3. Ship small, verify in browser, commit, move on.
 
 ## Design system (binding)
-- Brutalist. Black #000000, white #FFFFFF, red #E30613 as the single accent. No gradients, no shadows, no border-radius.
-- Type: JetBrains Mono everywhere (display + body + data). Personality comes from scale and weight, not from font mixing.
-- Hairline 1px black rules as the only structural device. Grid is visible and honest.
-- Signature element: the generator's live preview IS the hero. The landing page opens on a working budget table, not a headline.
-- Copy: sentence case, plain verbs, no marketing filler. Buttons name the result: "Download .xlsx", not "Submit".
-- Quality floor: responsive to 360px, visible focus rings, prefers-reduced-motion respected. No animation unless it explains something.
-- Anti-patterns to reject: numbered 01/02/03 markers, hero stat cards, "Trusted by" bars, testimonial carousels, cream/terracotta palettes.
+Quiet editorial. The reference is printed matter from a European Kunsthalle — Spector Books,
+a good catalogue — not a SaaS landing page and not a developer tool.
+
+- Palette: black #000000 on white #FFFFFF, red #E30613 as the only accent, plus grey #6B6B6B
+  for the second voice and #DEDEDE for rules. The accent appears at most twice per page.
+- Type, three roles, each doing what it is good at:
+  **Newsreader** (editorial serif) for headings and the one long read;
+  **Archivo** (neo-grotesque) for the interface — labels, captions, controls, body;
+  **JetBrains Mono** for figures only, where tabular numerals are the point.
+  Mono set as display type is what made an earlier pass read as a developer tool. Do not.
+- Space does the structural work, not rules. A rule separates; it never announces. If every
+  row on a page has a hairline, the page has noise instead of structure.
+- Signature: the hero is a catalogue spread — the brief in plain sentences on one side, the
+  budget it generated on the other, both computed by the real engine.
+- Quality floor: responsive to 360px, visible focus rings, prefers-reduced-motion respected.
+  No animation unless it explains something.
+- Anti-patterns to reject: numbered 01/02/03 markers, hero stat cards, "Trusted by" bars,
+  testimonial carousels, cream/terracotta palettes, uppercase mono headlines, a full-bleed
+  black hero with one bright accent. The last two are AI-design defaults; so is a page made
+  entirely of hairline-ruled columns.
 
 ## Working rules
 - Every task: run `npm run build` and `npm run lint` before committing. Broken build = not done.

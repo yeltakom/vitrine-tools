@@ -197,9 +197,16 @@ export const en = {
   'landing.sampleTitle': 'Soft interiors',
   'landing.sampleVenue': 'Kunstverein Leipzig',
 
+  // The hero spread: what the curator said, and what it cost.
+  'spread.briefLabel': 'The brief',
+  'spread.brief':
+    'Six artists. Twenty-four works, eleven of them on loan. Three months at a Kunstverein in Leipzig, with projection and sound.',
+  'spread.budgetLabel': 'The budget it produced',
+  'action.seeExample': 'See the whole thing',
+
   'hero.headline': 'Describe the show. Get the budget.',
   'hero.lede':
-    'Six artists, twenty-four works, eleven of them on loan, three months at a Kunstverein in Leipzig. That is the whole input. The generator prices every line — fees, freight, insurance, Aufbau, production, press, public programme — at mid-market rates for that city and that kind of venue, and hands you the .xlsx.',
+    'Fourteen questions about your exhibition, and the generator costs the whole thing out across six categories at mid-market rates for your city and your kind of venue. For curators who plan shows without a finance department.',
 
   // The wall label: the typed card beside a work. Artist, title and year,
   // medium, dimensions, credit line — filled in with what is actually true.
@@ -211,7 +218,7 @@ export const en = {
 
   'section.why': 'Why this exists',
   'why.body1':
-    'Every exhibition budget starts as a file someone else built. It arrives from a colleague or a previous show, gets passed between institutions, and by the time it reaches you nobody remembers which cells are formulas and which were typed over.',
+    'Every exhibition budget starts as a file someone else built, passed between institutions until nobody remembers which cells are formulas and which were typed over.',
   'why.body2':
     'It breaks quietly: a subtotal that stopped covering the last three rows, an artist fee renamed but never re-linked, Aufbau and Abbau counted once between them. Meanwhile the categories barely change from show to show — fees, transport and insurance, installation, production, communication, public programme — and the same numbers have to survive twice, once in the application and again in the Verwendungsnachweis a year later.',
   'why.body3':

@@ -1,76 +1,56 @@
 # Design plan — vitrine.tools
 
-Binding constraints come from CLAUDE.md. This file records the decisions those
-constraints leave open, so later passes do not re-litigate them.
+Direction chosen by the owner: **quiet editorial**. The reference is printed matter from a
+European Kunsthalle, not a SaaS landing page. CLAUDE.md's earlier "JetBrains Mono everywhere,
+no font mixing" clause was deleted on the owner's instruction — type is now chosen for the
+job rather than mandated.
 
 ## Tokens
-Three inks, no fourth. `--color-ink #000000`, `--color-paper #FFFFFF`, `--color-mark #E30613`.
-
-They are used as **areas**, not only as lines. A black panel is still two colours and no
-gradient; inversion is where the drama comes from in a palette this small. Red is spent
-exactly twice on the landing page: the total the generator calculates, and the one pricing
-tier the wall is hung around. Nowhere else — not on links, not on hovers, not on errors.
-
-## Type scale
-One family (JetBrains Mono). Rank is carried by scale and weight alone, so the jumps have
-to be large enough to read as decisions.
-
-| rung | size / weight | job |
+| token | value | job |
 | --- | --- | --- |
-| `.hero-type` | clamp(36–100px) / 800, −0.055em, 0.94 uppercase | the title wall. One per site. |
-| `.figure-price` | clamp(38–62px) / 800, −0.04em | a price. The only figure allowed to outgrow a total |
-| `.display` | clamp(26–38px) / 800 | a legal page's title |
-| `.wall-text` | 17→21px / 400 | the paragraph painted at the entrance of a room |
-| `.lede` | 15→18px / 400 | the opening paragraph under the title wall |
-| body | 13–14px / 400–500 | prose and ledger lines |
-| `LABEL` | 11px / 700 uppercase 0.16em | room labels, tier names, categories |
-| `.wall-label` | 11px / 400, 1.8 | the typed card beside a work |
+| `--color-paper` | `#FFFFFF` | the sheet |
+| `--color-ink` | `#000000` | headings, figures, the one filled control |
+| `--color-muted` | `#6B6B6B` | the second voice: captions, supporting columns |
+| `--color-rule` | `#DEDEDE` | furniture. A rule separates, it does not announce |
+| `--color-mark` | `#E30613` | signal only. Twice on the landing page: the grand total in the hero spread, and the hairline over the anchor pricing tier |
 
-De-emphasis is never a lighter ink. A hint is small, not grey.
+Admitting a grey was the change that let the page get quiet. Forcing every caption to full
+black is what made the earlier passes shout.
+
+## Type — three roles, three faces
+| face | role |
+| --- | --- |
+| **Newsreader** 400/500 | `.display`, `.display-sm`, the document title. Editorial serif, never uppercase |
+| **Archivo** 400/500/600 | body, `.lede`, `.label`, `.note`, every control |
+| **JetBrains Mono** 400/500 | `.figure`, `.figure-total`, `.figure-price`, ledger cells — tabular numerals only |
+
+Mono is kept exactly where columns of numbers must line up digit under digit. Setting it as
+display type is what made the previous pass read as a developer tool.
+
+Scale: `.display` clamp(34–58px) serif · `.display-sm` clamp(24–32px) serif · `.lede` 17→19px
+muted · body 15→16px · `.note` 13px muted · `.label` 11px 0.13em uppercase · `.figure-total`
+clamp(30–46px) mono.
 
 ## Layout
-Two measures, and the difference between them means something.
-
-- **Rooms** (`SHELL`, max 1120px) — the site. Full-bleed panels that alternate paper and ink.
-- **The document** (`DOC`, 78ch) — the budget. It keeps the narrow measure because it is a
-  document, and it is framed inside its room so you can see that it is an object on display.
-
-Structure is one device: a 1px rule in `currentColor` between a name and the figure it
-settles. It is the same device for a category and its subtotal, a room and its status, a
-document type and whether it is built yet.
+`SHELL` 1080px for the site, `DOC` 720px for the budget, because a document has a narrower
+measure than the page describing it. Sections are separated by 72–104px of space and a single
+hairline under their caption — not by a rule per row.
 
 ## Signature
-**The site is installed, not laid out.** It is hung the way the audience hangs a show.
-
-- A **title wall** in ink opens it: the headline set as a wall, uppercase, leading under 1.
-- Beside it hangs the **wall label** — the five-line typed card an institution puts next to
-  every object: maker, work and year, medium, dimensions, credit line. Filled in with what is
-  true here, including the dimensions: `Fourteen questions in, six categories out`, which is
-  the actual shape of the thing.
-- Each room after it opens with its own label, and where a room needs an introduction it gets
-  **wall text**, set larger than the catalogue prose beneath it.
-- The generator is the **object on display**: framed, labelled `THE GENERATOR / LIVE`. What is
-  shown is a budget the real engine generated from a real brief, still editable — never a
-  hand-typed sample, because the claim of the page is that nothing here is typed by hand.
-- Pricing is **four works on one wall**, divided by hairlines, with Full filled in red because
-  it is the only tier carrying PDF and every document type still to come.
-
-Because the displayed ledger is live, every editable cell carries its 1px rule **at rest**
-rather than on hover. A budget whose fields appear only under the pointer reads as a
-print-out, which is the one thing this page must not be.
+**The hero is a catalogue spread.** Verso: the brief in plain sentences. Recto: the six
+category subtotals the engine produced from exactly that brief, and the total. Both halves are
+computed on the page by `generateBudget`, so the hero is not an illustration of the product —
+it is the product, run once, in public. No marketing sentence has to explain what the tool
+does because the spread already showed it.
 
 ## Critique — would a generic AI produce this?
-A generic pass produces: a centred hero with a gradient, three feature cards with icons, a
-pricing table with checkmark columns and a "most popular" ribbon, an FAQ accordion. Every one
-of those is refused here — the ribbon becomes a red fill, the cards become panels divided by
-rules, the accordion becomes flat rows.
-
-Two earlier passes were thrown away for being generic in the other direction: a page that was
-nothing but 78ch of hairline-ruled small type, which is the broadsheet default, and a hero
-that was a read-only screenshot of the product. The brief's "open on a working table, not a
-headline" was overruled by the owner — the site has to state the business — but the ledger
-grammar it protects survives in every room.
+Three earlier passes were thrown away for being exactly the defaults this skill names:
+a broadsheet of hairline-ruled columns; a full-bleed black hero with one bright accent and
+100px uppercase mono; and a read-only screenshot presented as a live demo. The current page
+avoids all three — white ground, serif display, mono demoted to data, and the accent spent
+twice. The remaining risk is blandness, which is answered by the spread and by the amount of
+white the page is willing to hold.
 
 ## Motion
-One animation exists: `mark-in`, 120ms linear opacity, when a deviation mark appears.
-`prefers-reduced-motion` reduces it to nothing. There is no other motion on the site.
+One animation: `mark-in`, 120ms opacity, when a deviation mark appears.
+`prefers-reduced-motion` removes it. Nothing else moves.

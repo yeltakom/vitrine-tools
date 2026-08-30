@@ -7,6 +7,7 @@ import { generateBudget } from '@/lib/generate-budget'
 import type { BudgetRow } from '@/lib/budget'
 import BudgetLedger from '../budget-ledger'
 import BriefForm from './brief-form'
+import { DOC } from '../ledger-style'
 
 /**
  * Two states, one page: describe the show, then correct the budget it produced.
@@ -31,17 +32,20 @@ export default function GeneratorApp() {
     )
   }
 
+  // The brief needs the full measure for its columns; the budget it produced is
+  // a document and keeps the narrower one.
   return (
-    <BudgetLedger
-      /* Remounts on every generation so a fresh budget replaces the old one
-         instead of merging into edits made against a different brief. */
-      key={JSON.stringify(result.brief)}
-      masthead={false}
-      initialTitle={result.brief.title || t('field.titlePlaceholder')}
-      initialVenue={[result.brief.venue, result.brief.city].filter(Boolean).join(', ')}
-      initialRows={result.rows}
-      targetBudget={result.brief.targetBudget}
-      onEditBrief={() => setResult(null)}
-    />
+    <div className={DOC}>
+      <BudgetLedger
+        /* Remounts on every generation so a fresh budget replaces the old one
+           instead of merging into edits made against a different brief. */
+        key={JSON.stringify(result.brief)}
+        initialTitle={result.brief.title || t('field.titlePlaceholder')}
+        initialVenue={[result.brief.venue, result.brief.city].filter(Boolean).join(', ')}
+        initialRows={result.rows}
+        targetBudget={result.brief.targetBudget}
+        onEditBrief={() => setResult(null)}
+      />
+    </div>
   )
 }
